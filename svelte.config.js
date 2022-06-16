@@ -17,12 +17,15 @@ const config = {
 				}
 			},
 			server: {
-				hmr: {
-					clientPort: process.env.HMR_HOST ? 443 : 3000,
-					host: process.env.HMR_HOST
-						? process.env.HMR_HOST.substring('https://'.length)
-						: 'localhost'
-				}
+				// configure vite for HMR with Gitpod
+				hmr: process.env.GITPOD_WORKSPACE_URL
+					? {
+							// removes the protocol and replaces it with the port we're connecting to
+							host: process.env.GITPOD_WORKSPACE_URL.replace('https://', '3000-'),
+							protocol: 'wss',
+							clientPort: 443
+					  }
+					: true
 			}
 		}
 	}
