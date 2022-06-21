@@ -4,7 +4,7 @@ import { endpoints } from '$root/api/endpoints';
 import { getRandomIntInclusive } from '$root/utils/random';
 
 type EmpathyReq = {
-	base64Audio: string;
+	audio: string;
 	text: string;
 	uid: string;
 };
