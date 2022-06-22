@@ -16,15 +16,20 @@
 
 	import SpeechRecog from '$root/components/talk/SpeechRecog.svelte';
 	import MediaRec from '$root/components/talk/MediaRec.svelte';
+	import { reloadApp } from '$root/utils/reloadApp';
 
 	let error = false;
 	let message: string;
+
+	let hasMounted = false;
 
 	let stream: any = null;
 	let mediaRecorder: any = null;
 	let audioSource: any;
 
-	let hasMounted = false;
+	const DELAY_RELOAD = 1000 * 60 * 30;
+	const WATCHDOG_LIMIT = 10;
+	let watchdogTimer = 0;
 
 	const setIdle = () => {
 		$currentStatus = $status.idle;
@@ -57,6 +62,9 @@
 
 	const handleSpeechOnstartIdle = async () => {
 		console.log(`handleSpeechOnstartIdle | ${mediaRecorder.state}`);
+
+		watchdogTimer = 0;
+
 		if (audioSource && audioSource.removeEventListenr) {
 			audioSource.removeEventListenr('ended', setIdle);
 		}
@@ -70,6 +78,16 @@
 	};
 	const handleSpeechOnstartElse = () => {
 		console.log(`handleSpeechOnstartElse | ${mediaRecorder.state}`);
+
+		if (
+			($currentStatus === $status.thinking || $currentStatus === $status.talking) &&
+			watchdogTimer < WATCHDOG_LIMIT
+		) {
+			console.debug(`watchdogTimer: ${watchdogTimer} times`);
+			watchdogTimer++;
+		} else if (watchdogTimer >= WATCHDOG_LIMIT) {
+			reloadApp(window, DELAY_RELOAD);
+		}
 	};
 	const handleSpeechOnresult = (event: any) => {
 		console.log(`handleSpeechOnresult | ${mediaRecorder.state}`);

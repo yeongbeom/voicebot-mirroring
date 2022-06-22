@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	// import Talk from '$root/components/talk/Talk.svelte';
+	import Talk from '$root/components/talk/Talk.svelte';
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 
 	import { handleTransition } from '$root/utils/handleTransition';
@@ -26,7 +26,7 @@
 >
 	<div>
 		<h1>INDEX</h1>
-		<!-- <Talk /> -->
+		<Talk />
 	</div>
 </SlidableSection>
 
