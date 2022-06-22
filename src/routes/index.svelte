@@ -1,2 +1,19 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import { onDestroy, onMount } from 'svelte';
+
+	import Talk from '$root/components/talk/Talk.svelte';
+
+	onMount(() => {
+		console.debug('index.svelte mounted');
+	});
+
+	onDestroy(() => {
+		console.debug('index.svelte destroyed');
+	});
+</script>
+
+<div>
+	<Talk />
+</div>
+
+<h1>INDEX</h1>
