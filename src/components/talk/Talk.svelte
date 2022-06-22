@@ -30,12 +30,43 @@
 		$currentStatus = $status.idle;
 	};
 
-	const handleSpeechOnstartIdle = () => {
+	const stopRunningApps = () => {
+		if (mediaRecorder !== null) mediaRecorder.stop();
+		if (stream !== null) {
+			stream
+				.getTracks() // get all tracks from the MediaStream
+				.forEach((track: any) => {
+					console.debug(`${track} is being stopped`);
+					track.stop();
+				}); // stop each of them
+		}
+	};
+
+	const startMediaRecorder = async () => {
+		stopRunningApps();
+
+		try {
+			stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+			mediaRecorder = new MediaRecorder(stream);
+		} catch (err) {
+			error = true;
+			message = err as string;
+			throw new Error(message);
+		}
+	};
+
+	const handleSpeechOnstartIdle = async () => {
 		console.log(`handleSpeechOnstartIdle | ${mediaRecorder.state}`);
 		if (audioSource && audioSource.removeEventListenr) {
 			audioSource.removeEventListenr('ended', setIdle);
 		}
-		mediaRecorder.start();
+
+		try {
+			mediaRecorder.start();
+		} catch (error) {
+			await startMediaRecorder();
+			console.error(`MediaRecorder restarted due to error: ${error}`);
+		}
 	};
 	const handleSpeechOnstartElse = () => {
 		console.log(`handleSpeechOnstartElse | ${mediaRecorder.state}`);
@@ -89,39 +120,23 @@
 			$say = empathyRes.text;
 			$currentStatus = $status.talking;
 		} catch (error) {
-			$currentStatus = $status.idle;
+			setIdle();
 			console.error(error);
 			console.debug(`${$currentStatus}`);
 		}
 	};
 
 	onMount(async () => {
-		try {
-			stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-		} catch (err) {
-			error = true;
-			message = err as string;
-			throw new Error(message);
-		}
-
-		mediaRecorder = new MediaRecorder(stream);
+		await startMediaRecorder();
 
 		$currentStatus = $status.idle;
-		$say = 'hi';
+		$say = '안녕하세요';
 
 		hasMounted = true;
 	});
 
 	onDestroy(() => {
-		if (mediaRecorder !== null) mediaRecorder.stop();
-		if (stream !== null) {
-			stream
-				.getTracks() // get all tracks from the MediaStream
-				.forEach((track: any) => {
-					console.debug(`${track} is being stopped`);
-					track.stop();
-				}); // stop each of them
-		}
+		stopRunningApps();
 	});
 </script>
 
