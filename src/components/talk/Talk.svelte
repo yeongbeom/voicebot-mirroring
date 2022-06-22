@@ -116,6 +116,7 @@
 				audioSource.start(0);
 			});
 
+			//@ts-ignore
 			$currentExpression = $expression[empathyRes.emotion];
 			$say = empathyRes.text;
 			$currentStatus = $status.talking;

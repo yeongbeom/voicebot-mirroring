@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	import Talk from '$root/components/talk/Talk.svelte';
+	// import Talk from '$root/components/talk/Talk.svelte';
+	import SlidableSection from '$root/components/SlidableSection.svelte';
+
+	import { handleTransition } from '$root/utils/handleTransition';
 
 	onMount(() => {
 		console.debug('index.svelte mounted');
@@ -12,8 +15,24 @@
 	});
 </script>
 
-<div>
-	<Talk />
-</div>
+<svelte:head>
+	<title>INDEX</title>
+</svelte:head>
 
-<h1>INDEX</h1>
+<SlidableSection
+	on:drag-left={() => {
+		handleTransition('/apps');
+	}}
+>
+	<div>
+		<h1>INDEX</h1>
+		<!-- <Talk /> -->
+	</div>
+</SlidableSection>
+
+<style>
+	div {
+		height: 100vw;
+		background-color: green;
+	}
+</style>
