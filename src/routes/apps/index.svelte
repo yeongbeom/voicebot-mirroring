@@ -3,8 +3,6 @@
 
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 
-	import { handleTransition } from '$root/utils/handleTransition';
-
 	onMount(() => {
 		console.debug('apps/index.svelte mounted');
 	});
@@ -18,11 +16,7 @@
 	<title>APP</title>
 </svelte:head>
 
-<SlidableSection
-	on:drag-right={() => {
-		handleTransition('/');
-	}}
->
+<SlidableSection leftUrl="/">
 	<div>
 		<h1>Apps</h1>
 	</div>
