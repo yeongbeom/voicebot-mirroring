@@ -36,7 +36,10 @@
 	};
 
 	const stopRunningApps = () => {
-		if (mediaRecorder !== null) mediaRecorder.stop();
+		if (mediaRecorder !== null) {
+			console.debug(`${mediaRecorder} is being stopped`);
+			mediaRecorder.stop();
+		}
 		if (stream !== null) {
 			stream
 				.getTracks() // get all tracks from the MediaStream
@@ -146,6 +149,8 @@
 	};
 
 	onMount(async () => {
+		console.debug('Talk.svelte mounted');
+
 		await startMediaRecorder();
 
 		$currentStatus = $status.idle;
@@ -154,8 +159,10 @@
 		hasMounted = true;
 	});
 
-	onDestroy(() => {
-		stopRunningApps();
+	onDestroy(async () => {
+		await stopRunningApps();
+
+		console.debug(`Talk.svelte destroyed`);
 	});
 </script>
 

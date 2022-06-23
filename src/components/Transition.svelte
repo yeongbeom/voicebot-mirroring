@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { fly } from 'svelte/transition';
 
-	export let url: URL;
+	import { page } from '$app/stores';
+
+	let path = $page.url.pathname;
 </script>
 
-{#key url}
-	{#if url.pathname === '/'}
+{#key path}
+	{#if path === '/'}
 		<div in:fly={{ x: -800, duration: 250, delay: 300 }} out:fly={{ x: -800, duration: 250 }}>
 			<slot />
 		</div>
-	{:else if url.pathname === '/apps'}
+	{:else if path === '/apps'}
 		<div in:fly={{ x: 800, duration: 250, delay: 300 }} out:fly={{ x: 800, duration: 250 }}>
 			<slot />
 		</div>
