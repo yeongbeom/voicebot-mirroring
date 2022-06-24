@@ -17,7 +17,7 @@
 	<title>INDEX</title>
 </svelte:head>
 
-<SlidableSection rightUrl="/apps">
+<SlidableSection leftUrl="/apps">
 	<div>
 		<h1>INDEX</h1>
 		<Talk />

@@ -16,7 +16,7 @@
 	<title>APP</title>
 </svelte:head>
 
-<SlidableSection leftUrl="/">
+<SlidableSection rightUrl="/">
 	<div>
 		<h1>Apps</h1>
 	</div>
