@@ -1,30 +1,33 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { fly } from 'svelte/transition';
+	import { swipe } from 'svelte-gestures';
 
-	const deltaX = 300;
-	const deltaY = 100;
-	let startX: number;
-	let startY: number;
+	let sign: number;
 
-	const dispatch = createEventDispatcher();
+	export let leftUrl: string | null = null;
+	export let rightUrl: string | null = null;
 
-	const handleMousedown = (event: any) => {
-		startX = event.screenX;
-		startY = event.screenY;
-	};
+	const handler = (event: any) => {
+		const direction = event.detail.direction;
 
-	const handleMouseup = (event: any) => {
-		const diffX = event.screenX - startX;
-		const absDiffY = Math.abs(event.screenY - startY);
-
-		if (diffX < -deltaX && absDiffY < deltaY) {
-			dispatch('drag-left');
-		} else if (diffX > deltaX && absDiffY < deltaY) {
-			dispatch('drag-right');
+		if (direction === 'left' && leftUrl !== null) {
+			sign = -1;
+			goto(leftUrl);
+		} else if (direction === 'right' && rightUrl !== null) {
+			sign = 1;
+			goto(rightUrl);
 		}
+
+		console.log(`direction: ${direction}`);
 	};
 </script>
 
-<section on:mousedown={handleMousedown} on:mouseup={handleMouseup}>
+<section
+	use:swipe={{ timeframe: 300, minSwipeDistance: 60 }}
+	on:swipe={handler}
+	in:fly={{ x: 800 * sign, duration: 250, delay: 300 }}
+	out:fly={{ x: 800 * sign, duration: 250 }}
+>
 	<slot />
 </section>

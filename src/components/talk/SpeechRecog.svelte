@@ -10,6 +10,8 @@
 	let message: string;
 	let recognition: any = null;
 
+	let active = true;
+
 	onMount(() => {
 		console.debug('SpeechRecognition.svelte mounted');
 
@@ -54,6 +56,7 @@
 			console.debug(`Speech recognition ended | ${$currentStatus}`);
 			dispatch('speech-onend');
 
+			if (!active) return; // prevent from unintended restarting
 			recognition.start();
 		};
 
@@ -61,8 +64,13 @@
 	});
 
 	onDestroy(() => {
-		console.debug('SpeechRecognition.svelte destroyed');
-		if (recognition !== null) recognition.stop();
+		active = false;
+
+		if (recognition !== null) {
+			console.debug(`${recognition} is being stopped`);
+			recognition.stop();
+		}
+		console.debug(`SpeechRecognition.svelte destroyed | active: ${active}`);
 	});
 </script>
 

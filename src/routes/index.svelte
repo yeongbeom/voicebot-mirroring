@@ -4,8 +4,6 @@
 	import Talk from '$root/components/talk/Talk.svelte';
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 
-	import { handleTransition } from '$root/utils/handleTransition';
-
 	onMount(() => {
 		console.debug('index.svelte mounted');
 	});
@@ -19,11 +17,7 @@
 	<title>INDEX</title>
 </svelte:head>
 
-<SlidableSection
-	on:drag-left={() => {
-		handleTransition('/apps');
-	}}
->
+<SlidableSection leftUrl="/apps">
 	<div>
 		<h1>INDEX</h1>
 		<Talk />
