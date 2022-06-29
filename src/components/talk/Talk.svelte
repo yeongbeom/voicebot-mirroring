@@ -28,7 +28,7 @@
 	let audioSource: any;
 
 	const DELAY_RELOAD = 1000 * 3;
-	const WATCHDOG_LIMIT = 10;
+	const WATCHDOG_LIMIT = 20;
 	let watchdogTimer = 0;
 
 	const setIdle = () => {

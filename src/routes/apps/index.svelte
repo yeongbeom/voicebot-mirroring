@@ -2,9 +2,12 @@
 	import type { Load } from '@sveltejs/kit';
 
 	export const load: Load = ({ session, props }) => {
+		console.debug(`/apps (SSR): ${session.user?.emergencyMobile}`);
+
 		if (session.user) {
 			return {
-				status: 302
+				status: 302,
+				props
 			};
 		}
 
@@ -29,6 +32,7 @@
 
 	export let error: string;
 	export let success = '';
+	export let user: User;
 
 	onMount(() => {
 		console.debug('apps/index.svelte mounted');
@@ -44,9 +48,14 @@
 	<title>APP</title>
 </svelte:head>
 
+<div>{user?.emergencyMobile}</div>
+
+<div>
+	session: {$session.user?.emergencyMobile}
+</div>
+
 <div>
 	<ErrorMessage error={Boolean(error)}>{error}</ErrorMessage>
-	{$session.user?.emergencyMobile}
 </div>
 
 <SlidableSection rightUrl="/">
@@ -54,7 +63,11 @@
 		action="/apps"
 		method="post"
 		use:enhance={{
-			result: () => {
+			result: async (response) => {
+				const result = await response.json();
+				error = result.error;
+				success = result.success;
+				user = result.user;
 				if (mobile) $session.user = { emergencyMobile: mobile };
 			}
 		}}
@@ -64,7 +77,6 @@
 			<input
 				type="text"
 				name="mobile"
-				text="1111111"
 				aria-label="Emergency mobile"
 				placeholder="비상연락망"
 				minlength="7"
@@ -77,14 +89,15 @@
 				on:click_outside={() => (focus = false)}
 			/>
 		</span>
-		{#if !success}
+		{#if !$session.user}
 			<span>
 				<button>로그인</button>
 			</span>
 		{/if}
 	</form>
-	{#if success}
-		<button>로그아웃</button>
+	{#if $session.user}
+		<a href="/auth/logout">Log out</a>
+		<a href="/account">My account</a>
 	{/if}
 
 	{#if focus}

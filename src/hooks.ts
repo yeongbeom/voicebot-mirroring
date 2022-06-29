@@ -19,11 +19,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.user = { emergencyMobile: session.emergencyMobile };
 	}
 
+	console.debug(`hooks.ts: ${session.emergencyMobile}`);
+
 	return await resolve(event);
 };
 
 export const getSession: GetSession = ({ locals }) => {
 	if (!locals.user) return {};
+
+	console.debug(`getSession: ${locals.user.emergencyMobile}`);
 
 	// exposing this to the client
 	return {

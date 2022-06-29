@@ -2,7 +2,7 @@ import { invalidate } from '$app/navigation';
 import { page } from '$app/stores';
 
 type Parameters = {
-	result?: ({ form }: { form: HTMLFormElement }) => void;
+	result?: (response: Response, form: HTMLFormElement) => void;
 };
 type Destroy = { destroy: () => void };
 type Enhance = (form: HTMLFormElement, { result }?: Parameters) => Destroy;
@@ -35,7 +35,7 @@ export const enhance: Enhance = (form, { result } = {}) => {
 
 		// reset the form
 		if (result) {
-			result({ form });
+			result(response, form);
 		}
 	}
 
