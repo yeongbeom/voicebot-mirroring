@@ -27,7 +27,7 @@
 	let mediaRecorder: any = null;
 	let audioSource: any;
 
-	const DELAY_RELOAD = 1000 * 60 * 30;
+	const DELAY_RELOAD = 1000 * 3;
 	const WATCHDOG_LIMIT = 10;
 	let watchdogTimer = 0;
 
