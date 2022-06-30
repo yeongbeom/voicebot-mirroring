@@ -13,6 +13,9 @@ model User {
     createdAt       DateTime @default(now())
     updatedAt       DateTime @updatedAt
     emergencyMobile String   @unique
-    passwordHash    String?
+    expression      String?
+    emotion         String?
     age             Int?
+    theme           String?
+    passwordHash    String?
 }
