@@ -37,7 +37,9 @@ export const post: RequestHandler = async ({ request }) => {
 				id: uuidv4(),
 				createdAt: new Date(),
 				updatedAt: new Date(),
-				emergencyMobile
+				emergencyMobile,
+				age: 123,
+				passwordHash: 'password'
 			}
 		});
 
