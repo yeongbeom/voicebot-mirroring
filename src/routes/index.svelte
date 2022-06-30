@@ -17,16 +17,19 @@
 	<title>INDEX</title>
 </svelte:head>
 
+<div>
+	<Talk />
+</div>
+
 <SlidableSection leftUrl="/apps">
-	<div>
+	<div class="index">
 		<h1>INDEX</h1>
-		<Talk />
 	</div>
 </SlidableSection>
 
 <style>
-	div {
-		height: 100vw;
+	.index {
+		height: 100vh;
 		background-color: green;
 	}
 </style>

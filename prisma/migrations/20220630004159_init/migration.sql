@@ -4,8 +4,11 @@ CREATE TABLE "User" (
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
     "emergencyMobile" TEXT NOT NULL,
-    "passwordHash" TEXT NOT NULL,
-    "age" INTEGER NOT NULL,
+    "expression" TEXT,
+    "emotion" TEXT,
+    "age" INTEGER,
+    "theme" TEXT,
+    "passwordHash" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
