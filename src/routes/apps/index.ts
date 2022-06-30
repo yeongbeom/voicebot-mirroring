@@ -1,7 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 
 import { serialize } from 'cookie';
-import { v4 as uuidv4 } from 'uuid';
 
 import { prisma } from '$root/lib/database';
 
@@ -34,12 +33,7 @@ export const post: RequestHandler = async ({ request }) => {
 	if (!user) {
 		await prisma.user.create({
 			data: {
-				id: uuidv4(),
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				emergencyMobile,
-				age: 123,
-				passwordHash: 'password'
+				emergencyMobile
 			}
 		});
 
