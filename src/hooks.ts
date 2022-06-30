@@ -1,7 +1,7 @@
 import type { GetSession, Handle } from '@sveltejs/kit';
 import { parse } from 'cookie';
 
-import { prisma } from '$lib/database';
+import { prisma } from '$root/lib/database';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const cookieHeader = event.request.headers.get('cookie');
@@ -19,7 +19,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		event.locals.user = { emergencyMobile: session.emergencyMobile };
 	}
 
-	console.debug(`hooks.ts: ${session.emergencyMobile}`);
+	console.debug(session ? `hooks.ts: ${session.emergencyMobile}` : 'hooks.ts: no session');
 
 	return await resolve(event);
 };
