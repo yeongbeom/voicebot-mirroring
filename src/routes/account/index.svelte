@@ -20,6 +20,17 @@
 </script>
 
 <script lang="ts">
+	import { io } from 'socket.io-client';
+
+	// const socket = io('http://localhost:3080', {
+	// 	cors: { origin: '*' }
+	// });
+	const socket = io('http://localhost:3080');
+
+	socket.on('eventFromServer', (message) => {
+		console.log(message);
+	});
+
 	export let mobile: string;
 </script>
 
