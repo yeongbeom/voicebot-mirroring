@@ -1,6 +1,8 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
 
+	import Slider from '$root/components/Slider.svelte';
+
 	export const load: Load = ({ session }) => {
 		console.debug(`/account (SSR): ${session.user?.emergencyMobile}`);
 		if (!session.user) {
@@ -20,20 +22,30 @@
 </script>
 
 <script lang="ts">
-	import { io } from 'socket.io-client';
+	import { onDestroy } from 'svelte';
 
-	// const socket = io('http://localhost:3080', {
-	// 	cors: { origin: '*' }
-	// });
-	const socket = io('http://localhost:3080');
-
-	socket.on('eventFromServer', (message) => {
-		console.log(message);
-	});
+	import { startSocket, endSocket } from '$root/lib/edgeServer';
 
 	export let mobile: string;
+
+	const socket = startSocket();
+
+	const handleChange = (event: CustomEvent<{ volume: number }>) => {
+		const volume = event.detail;
+		console.log(volume);
+
+		socket.emit('volumeChange', volume);
+	};
+
+	onDestroy(() => {
+		endSocket(socket);
+	});
 </script>
 
 <h1>Protected</h1>
 
 <p>Welcome {mobile}!</p>
+
+<Slider on:change={handleChange} />
+
+<a href="/apps">Apps</a>
