@@ -11,6 +11,10 @@
 
 - Raspberry Pi OS settings
 
+  - OS: Raspberry Pi OS Lite
+  - System: 32-bit
+  - Kernel version: 5.10
+  - Debian version: 10 (buster)
   - Set up WIFI with on-screen keyboard
   - Go to the main menu and open the Raspberry Pi Configuration tool. Select the Interfaces tab and ensure that the camera is enabled. Reboot your Raspberry Pi.
   - Adjust audio volume
@@ -33,11 +37,17 @@
     ```
 
     ```bash
-    sudo apt install nodejs -y
+    sudo apt install nodejs git -y
+    ```
+
+    ```bash
+    git clone https://github.com/hyunduk0206/voicebot-dev.git
+    cd voicebot-dev/edge-server
     ```
 
     ```bash
     npm i
+    npm run dev
     ```
 
 ## Media file install

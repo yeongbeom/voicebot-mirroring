@@ -41,6 +41,7 @@
 	<button on:click={handleClick}>3</button>
 	<button on:click={handleClick}>4</button>
 </div>
+<a href="/apps">Apps</a>
 
 <style>
 	div {
