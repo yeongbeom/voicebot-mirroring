@@ -32,6 +32,10 @@
 </script>
 
 <div>
+	<video src="http://localhost:3080/video" controls />
+</div>
+
+<div>
 	<button on:click={handleClick}>1</button>
 	<button on:click={handleClick}>2</button>
 	<button on:click={handleClick}>3</button>
