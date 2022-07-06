@@ -23,7 +23,7 @@
 	import { onDestroy } from 'svelte';
 
 	import { startSocket, endSocket } from '$root/lib/edgeServer';
-	import { debugMode, webrtcStream } from '$root/stores/config';
+	import { debugMode, webrtcStream, monitoring } from '$root/stores/config';
 
 	import Slider from '$root/components/shared/Slider.svelte';
 	import Switch from '$root/components/shared/Switch.svelte';
@@ -50,6 +50,7 @@
 
 <Switch bind:value={$debugMode} label="Debug Mode" design="slider" />
 <Switch bind:value={$webrtcStream} label="WebRTC" design="slider" />
+<Switch bind:value={$monitoring} label="Monitoring" design="slider" />
 
 <Slider on:change={handleChange} />
 

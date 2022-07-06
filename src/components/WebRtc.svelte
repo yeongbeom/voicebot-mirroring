@@ -2,7 +2,7 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { endpoints } from '$root/api/endpoints';
 	import { webrtcStart, webrtcStop } from '$root/api/webrtc';
-	import { debugMode } from '$root/stores/config';
+	import { debugMode, monitoring } from '$root/stores/config';
 
 	const webrtcParamsMonitoring = {
 		'use-datachannel': 'off',
@@ -53,12 +53,14 @@
 		}
 
 		try {
-			webrtcMonitoring = webrtcStart(
-				endpoints.offerMonitoring,
-				webrtcParamsMonitoring,
-				domElemMonitoring,
-				userId
-			);
+			if ($monitoring === 'on') {
+				webrtcMonitoring = webrtcStart(
+					endpoints.offerMonitoring,
+					webrtcParamsMonitoring,
+					domElemMonitoring,
+					userId
+				);
+			}
 			webrtcEmpathy = webrtcStart(
 				endpoints.offerEmpathy,
 				webrtcParamsEmpathy,
