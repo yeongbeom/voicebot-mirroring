@@ -1,5 +1,5 @@
 {
-	"name": "voicebot-dev",
+	"name": "voicebot",
 	"version": "0.0.1",
 	"scripts": {
 		"predev": "prisma migrate dev",

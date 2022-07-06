@@ -41,8 +41,8 @@
     ```
 
     ```bash
-    git clone https://github.com/hyunduk0206/voicebot-dev.git
-    cd voicebot-dev/edge-server
+    git clone https://github.com/hyunduk0206/voicebot.git
+    cd voicebot/edge-server
     ```
 
     ```bash
