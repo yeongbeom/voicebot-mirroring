@@ -1,8 +1,6 @@
 <script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
 
-	import Slider from '$root/components/Slider.svelte';
-
 	export const load: Load = ({ session }) => {
 		console.debug(`/account (SSR): ${session.user?.emergencyMobile}`);
 		if (!session.user) {
@@ -25,6 +23,10 @@
 	import { onDestroy } from 'svelte';
 
 	import { startSocket, endSocket } from '$root/lib/edgeServer';
+	import { debugMode, webrtcStream } from '$root/stores/config';
+
+	import Slider from '$root/components/shared/Slider.svelte';
+	import Switch from '$root/components/shared/Switch.svelte';
 
 	export let mobile: string;
 
@@ -45,6 +47,9 @@
 <h1>Protected</h1>
 
 <p>Welcome {mobile}!</p>
+
+<Switch bind:value={$debugMode} label="Debug Mode" design="slider" />
+<Switch bind:value={$webrtcStream} label="WebRTC" design="slider" />
 
 <Slider on:change={handleChange} />
 

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	import { debugMode } from '$root/stores/config';
+	import { debugMode, webrtcStream } from '$root/stores/config';
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 	import Talk from '$root/components/talk/Talk.svelte';
 	import DefaultExpression from '$root/components/expressions/DefaultExpression.svelte';
 	import SpeechBubble from '$root/components/expressions/SpeechBubble.svelte';
+	import WebRtc from '$root/components/WebRtc.svelte';
 	import TestExpression from '$root/components/expressions/TestExpression.svelte';
 	import TestText from '$root/components/expressions/TestText.svelte';
 
@@ -37,8 +38,11 @@
 		</div>
 	</div>
 </SlidableSection>
+{#if $webrtcStream === 'on'}
+	<WebRtc />
+{/if}
 
-{#if $debugMode}
+{#if $debugMode === 'on'}
 	<div>
 		<TestExpression />
 		<TestText />
