@@ -6,10 +6,12 @@ export const startSocket = () => {
 	// socket.on('eventFromServer', (message) => {
 	// 	console.debug(message);
 	// });
+	console.debug('Socket connected');
 
 	return socket;
 };
 
 export const endSocket = (socket: Socket) => {
 	socket.disconnect();
+	console.debug('Socket disconnected');
 };

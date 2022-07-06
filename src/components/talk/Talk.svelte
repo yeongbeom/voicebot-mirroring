@@ -7,11 +7,12 @@
 
 	import {
 		currentStatus,
-		say,
-		heard,
-		status,
 		currentExpression,
-		expression
+		isTalking,
+		status,
+		expression,
+		heard,
+		say
 	} from '$root/stores/bot';
 
 	import SpeechRecog from '$root/components/talk/SpeechRecog.svelte';
@@ -143,10 +144,46 @@
 			$currentStatus = $status.talking;
 		} catch (error) {
 			setIdle();
-			console.error(error);
-			console.debug(`${$currentStatus}`);
+			console.error(`${error} (${$currentStatus})`);
 		}
 	};
+
+	const onStatusChange = () => {
+		$isTalking = false;
+
+		switch ($currentStatus) {
+			case $status.init: {
+				$currentExpression = $expression.neutral;
+				$currentStatus = $status.idle;
+				$say = '연결 중...<br />잠시만 기다려주세요';
+				break;
+			}
+			case $status.idle: {
+				$currentExpression = $expression.neutral;
+				break;
+			}
+			case $status.listening: {
+				$currentExpression = $expression.listen;
+				break;
+			}
+			case $status.thinking: {
+				$currentExpression = $expression.think;
+				break;
+			}
+			case $status.talking: {
+				$isTalking = true;
+				break;
+			}
+			default: {
+				throw new Error('Invalid status change');
+			}
+		}
+	};
+
+	$: {
+		$currentStatus;
+		onStatusChange();
+	}
 
 	onMount(async () => {
 		console.debug('Talk.svelte mounted');
@@ -177,7 +214,7 @@
 	<ErrorMessage {error}>{message}</ErrorMessage>
 {/if}
 
-<div>
+<!-- <div>
 	-> {$say}
 </div>
 
@@ -190,4 +227,4 @@
 </div>
 <div>
 	-> {$currentStatus}
-</div>
+</div> -->

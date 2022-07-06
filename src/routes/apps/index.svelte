@@ -99,6 +99,7 @@
 		<a href="/auth/logout">Log out</a>
 		<a href="/account">My account</a>
 	{/if}
+	<a href="/apps/therapy">Multimodal therapy</a>
 
 	{#if focus}
 		<div>
