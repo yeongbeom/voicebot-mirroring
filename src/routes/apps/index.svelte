@@ -32,11 +32,11 @@
 
 	export let error: string;
 	export let success = '';
-	export let user: User;
+
+	if ($session.user) mobile = $session.user.emergencyMobile;
 
 	onMount(() => {
 		console.debug('apps/index.svelte mounted');
-		if ($session.user) mobile = $session.user.emergencyMobile;
 	});
 
 	onDestroy(() => {
@@ -45,75 +45,95 @@
 </script>
 
 <svelte:head>
-	<title>APP</title>
+	<title>Applications</title>
 </svelte:head>
 
-<div>{user?.emergencyMobile}</div>
-
-<div>
-	session: {$session.user?.emergencyMobile}
-</div>
-
-<div>
-	<ErrorMessage error={Boolean(error)}>{error}</ErrorMessage>
-</div>
+<ErrorMessage error={Boolean(error)}>{error}</ErrorMessage>
 
 <SlidableSection rightUrl="/">
-	<form
-		action="/apps"
-		method="post"
-		use:enhance={{
-			result: async (response) => {
-				const result = await response.json();
-				error = result.error;
-				success = result.success;
-				user = result.user;
-				if (mobile) $session.user = { emergencyMobile: mobile };
-			}
-		}}
-	>
-		<span> 010 </span>
-		<span>
-			<input
-				type="text"
-				name="mobile"
-				aria-label="Emergency mobile"
-				placeholder="비상연락망"
-				minlength="7"
-				maxlength="8"
-				pattern="[0-9]+"
-				required
-				bind:value={mobile}
-				use:clickOutside
-				on:focus={() => (focus = true)}
-				on:click_outside={() => (focus = false)}
-			/>
-		</span>
-		{#if !$session.user}
+	<nav>
+		<form
+			action="/apps"
+			method="post"
+			use:enhance={{
+				result: async (response) => {
+					const result = await response.json();
+					error = result.error;
+					success = result.success;
+					if (mobile) $session.user = { emergencyMobile: mobile };
+				}
+			}}
+		>
+			<span>비상연락망</span>
+			<span> 010 </span>
 			<span>
-				<button>로그인</button>
+				<input
+					type="text"
+					name="mobile"
+					aria-label="Emergency mobile"
+					placeholder="비상연락망"
+					minlength="7"
+					maxlength="8"
+					pattern="[0-9]+"
+					required
+					bind:value={mobile}
+					use:clickOutside
+					on:focus={() => (focus = true)}
+					on:click_outside={() => (focus = false)}
+				/>
 			</span>
-		{/if}
-	</form>
-	{#if $session.user}
-		<a href="/auth/logout">Log out</a>
-		<a href="/account">My account</a>
-	{/if}
-	<a href="/apps/therapy">Multimodal therapy</a>
 
+			{#if !$session.user}
+				<span>
+					<button>로그인</button>
+				</span>
+			{/if}
+		</form>
+
+		{#if $session.user}
+			<a href="/auth/logout">Log out</a>
+			<a href="/account">My account</a>
+		{/if}
+	</nav>
+	<div>
+		<a href="/apps/therapy">Multimodal therapy</a>
+	</div>
+	<div>
+		<section>section</section>
+		<section>section</section>
+	</div>
 	{#if focus}
-		<div>
+		<aside>
 			<Keypad bind:value={mobile} />
-		</div>
+		</aside>
 	{/if}
 </SlidableSection>
 
 <style>
-	form {
+	nav {
+		height: 10vh;
+		display: flex;
+		background-color: green;
+	}
+
+	div {
+		height: 10vh;
+		background-color: gray;
+	}
+
+	section {
+		background-color: blue;
+	}
+
+	aside {
+		background-color: black;
+	}
+
+	nav > form {
 		height: 50vh;
 	}
 
-	input:valid {
+	nav input:valid {
 		border: 3px solid greenyellow;
 	}
 </style>

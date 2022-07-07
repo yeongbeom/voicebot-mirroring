@@ -3,6 +3,7 @@
 	import { fly } from 'svelte/transition';
 	import { swipe } from 'svelte-gestures';
 
+	export let height = '100vh';
 	let sign: number;
 
 	export let leftUrl: string | null = null;
@@ -28,6 +29,13 @@
 	on:swipe={handler}
 	in:fly={{ x: 800 * sign, duration: 250, delay: 300 }}
 	out:fly={{ x: 800 * sign, duration: 250 }}
+	style="--height: {height}"
 >
 	<slot />
 </section>
+
+<style>
+	section {
+		height: var(--height);
+	}
+</style>
