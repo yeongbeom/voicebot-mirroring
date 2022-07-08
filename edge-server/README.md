@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Chromium browser 88
+- Chromium browser 86
 
 - Peripherals
 

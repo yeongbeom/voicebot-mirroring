@@ -1,6 +1,9 @@
 <script lang="ts">
+	import './expressions.css';
+
 	import anime from 'animejs';
 	import { browser } from '$app/env';
+
 	import { currentExpression, isTalking } from '$root/stores/bot';
 
 	const expressionPaths = {
@@ -1095,9 +1098,6 @@
 </div>
 
 <style>
-	.expression {
-		overflow: visible;
-	}
 	/* init */
 	.option_listen,
 	.option_think {

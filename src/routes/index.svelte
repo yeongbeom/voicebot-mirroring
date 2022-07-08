@@ -57,8 +57,6 @@
 
 <style>
 	div.voicebot {
-		width: 800px;
-		height: 480px;
 		display: grid;
 		grid-template-columns: 1fr;
 	}
