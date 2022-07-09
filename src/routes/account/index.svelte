@@ -3,17 +3,17 @@
 
 	export const load: Load = ({ session }) => {
 		console.debug(`/account (SSR): ${session.user?.emergencyMobile}`);
-		if (!session.user) {
-			return {
-				status: 302,
-				redirect: '/apps'
-			};
-		}
+		// if (!session.user) {
+		// 	return {
+		// 		status: 302,
+		// 		redirect: '/apps'
+		// 	};
+		// }
 
 		return {
 			status: 200,
 			props: {
-				mobile: session.user.emergencyMobile
+				mobile: session.user?.emergencyMobile ?? '비회원'
 			}
 		};
 	};
@@ -28,6 +28,9 @@
 	import Slider from '$root/components/shared/Slider.svelte';
 	import Switch from '$root/components/shared/Switch.svelte';
 	import Radio from '$root/components/shared/Radio.svelte';
+	import BackSvg from '$root/components/shared/BackSvg.svelte';
+
+	import Header from '$root/components/Header.svelte';
 
 	export let mobile: string;
 
@@ -60,20 +63,71 @@
 	});
 </script>
 
-<h1>Protected</h1>
+<div class="grid-container">
+	<div class="header">
+		<span> <BackSvg /> </span>
+		<span style={'font-size: 32px'}> 설정 </span>
+		<span>
+			{#if mobile === '비회원'}
+				{mobile}
+			{:else if mobile.length === 7}
+				010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
+			{:else if mobile.length === 8}
+				010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
+			{/if}
+		</span>
+	</div>
+	<div class="content">
+		<Radio
+			options={characterOptions}
+			fontSize={16}
+			legend="케릭터"
+			bind:userSelected={$character}
+		/>
+		<Switch bind:value={$debugMode} label="Debug Mode" design="slider" />
+		<Switch bind:value={$webrtcStream} label="WebRTC" design="slider" />
+		<Switch bind:value={$monitoring} label="Monitoring" design="slider" />
 
-<p>Welcome {mobile}!</p>
+		<Slider on:change={handleChange} />
 
-<Radio
-	options={characterOptions}
-	fontSize={16}
-	legend="케릭터"
-	bind:userSelected={$character}
-/>
-<Switch bind:value={$debugMode} label="Debug Mode" design="slider" />
-<Switch bind:value={$webrtcStream} label="WebRTC" design="slider" />
-<Switch bind:value={$monitoring} label="Monitoring" design="slider" />
+		<a href="/apps">Apps</a>
+	</div>
+</div>
 
-<Slider on:change={handleChange} />
+<style>
+	:root {
+		--grid-padding__top: 3.5rem;
+		--grid-column__header: 14vh;
+		--grid-row-gap: 1rem;
+		--grid-column-gap: 1rem;
 
-<a href="/apps">Apps</a>
+		--border-radius: 3rem;
+	}
+
+	.grid-container {
+		height: 100%;
+		padding: var(--grid-padding__top) 2.5rem;
+
+		display: grid;
+		column-gap: var(--grid-column-gap);
+		row-gap: var(--grid-row-gap);
+		grid-template-rows: var(--grid-column__header) calc(
+				86vh - var(--grid-row-gap) - var(--grid-padding__top) * 2
+			);
+	}
+
+	.header {
+		border: 3px solid darkgray;
+		border-radius: var(--border-radius);
+
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		justify-items: center;
+		align-items: center;
+	}
+
+	.content {
+		border: 3px solid darkgray;
+		border-radius: var(--border-radius);
+	}
+</style>

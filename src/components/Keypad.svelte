@@ -18,7 +18,7 @@
 	};
 </script>
 
-<div class="keypad">
+<keypad class="keypad">
 	<button on:click={select(1)}>1</button>
 	<button on:click={select(2)}>2</button>
 	<button on:click={select(3)}>3</button>
@@ -32,7 +32,7 @@
 	<button disabled={!value} on:click={clear}>지우기</button>
 	<button on:click={select(0)}>0</button>
 	<button disabled={!value} on:click={del}>삭제</button>
-</div>
+</keypad>
 
 <style>
 	.keypad {
@@ -41,6 +41,10 @@
 		height: 100%;
 		grid-template-columns: repeat(3, 33%);
 		grid-template-rows: repeat(4, 24.625%);
+
+		padding: 1rem;
+		background-color: rgba(0, 0, 0, 0.01);
+		border-radius: 8px;
 	}
 
 	button {
@@ -65,7 +69,7 @@
 		transition: box-shadow 0.2s, -ms-transform 0.1s, -webkit-transform 0.1s, transform 0.1s;
 		user-select: none;
 		-webkit-user-select: none;
-		width: auto;
+		width: 140px;
 	}
 
 	button:focus-visible {

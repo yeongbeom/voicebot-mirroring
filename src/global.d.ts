@@ -6,3 +6,9 @@ type EmpathyRes = {
 type User = {
 	emergencyMobile: string;
 };
+
+declare namespace svelte.JSX {
+	interface HTMLProps<T> {
+		onclick_outside?: (event: CustomEvent) => void;
+	}
+}
