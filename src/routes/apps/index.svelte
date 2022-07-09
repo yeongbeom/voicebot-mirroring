@@ -53,7 +53,7 @@
 
 <ErrorMessage error={Boolean(error)}>{error}</ErrorMessage>
 
-<SlidableSection rightUrl="/">
+<SlidableSection rightUrl="/" leftUrl='/account'>
 	<div class="grid-container">
 		<div class="header">
 			<Header

@@ -30,6 +30,7 @@
 	import Radio from '$root/components/shared/Radio.svelte';
 	import BackSvg from '$root/components/shared/BackSvg.svelte';
 
+	import SlidableSection from '$root/components/SlidableSection.svelte';
 	import Header from '$root/components/Header.svelte';
 
 	export let mobile: string;
@@ -63,36 +64,38 @@
 	});
 </script>
 
-<div class="grid-container">
-	<div class="header">
-		<span> <BackSvg /> </span>
-		<span style={'font-size: 32px'}> 설정 </span>
-		<span>
-			{#if mobile === '비회원'}
-				{mobile}
-			{:else if mobile.length === 7}
-				010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
-			{:else if mobile.length === 8}
-				010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
-			{/if}
-		</span>
-	</div>
-	<div class="content">
-		<Radio
-			options={characterOptions}
-			fontSize={16}
-			legend="케릭터"
-			bind:userSelected={$character}
-		/>
-		<Switch bind:value={$debugMode} label="Debug Mode" design="slider" />
-		<Switch bind:value={$webrtcStream} label="WebRTC" design="slider" />
-		<Switch bind:value={$monitoring} label="Monitoring" design="slider" />
+<SlidableSection rightUrl="/apps">
+	<div class="grid-container">
+		<div class="header">
+			<a href="/apps"><BackSvg /></a>
+			<span style={'font-size: 32px'}> 설정 </span>
+			<span>
+				{#if mobile === '비회원'}
+					{mobile}
+				{:else if mobile.length === 7}
+					010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
+				{:else if mobile.length === 8}
+					010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
+				{/if}
+			</span>
+		</div>
+		<div class="content">
+			<Radio
+				options={characterOptions}
+				fontSize={16}
+				legend="케릭터"
+				bind:userSelected={$character}
+			/>
+			<Switch bind:value={$debugMode} label="Debug Mode" design="slider" />
+			<Switch bind:value={$webrtcStream} label="WebRTC" design="slider" />
+			<Switch bind:value={$monitoring} label="Monitoring" design="slider" />
 
-		<Slider on:change={handleChange} />
+			<Slider on:change={handleChange} />
 
-		<a href="/apps">Apps</a>
+			<a href="/apps">Apps</a>
+		</div>
 	</div>
-</div>
+</SlidableSection>
 
 <style>
 	:root {
