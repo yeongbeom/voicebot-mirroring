@@ -32,9 +32,12 @@
 	--color-btn-primary-active-hover: hsl(204 88% 60%);
 	--color-btn-primary-inactive: hsl(205 70% 33%);
 	--color-btn-secondary: hsl(192 19% 95%);
-	--color-border-primary: hsl(0, 0%, 34%);
 	--color-link-hover: hsl(209 22% 19%);
 	--color-placeholder: hsl(210 34% 80%);
+
+	--color-green: #58e7a5;
+	--color-border-primary: #696969;
+	--color-border-secondary: hsl(0, 0%, 34%);
 
 	--radius-base: 2.4rem;
 }

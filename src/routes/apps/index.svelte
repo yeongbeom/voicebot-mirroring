@@ -109,6 +109,7 @@
 
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 	}
 
 	.content__left {
@@ -119,16 +120,19 @@
 
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 	}
 
 	.content__rightup {
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 	}
 
 	.content__rightdown {
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 	}
 
 	.modal {

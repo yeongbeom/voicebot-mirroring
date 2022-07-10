@@ -40,7 +40,7 @@
 
 	button.active {
 		color: #222222;
-		border: 3px solid greenyellow;
+		border: 3px solid var(--color-green);
 	}
 
 	button:focus-visible {

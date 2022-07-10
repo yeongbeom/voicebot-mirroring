@@ -20,48 +20,12 @@
 </script>
 
 <script lang="ts">
-	import { onDestroy } from 'svelte';
-
-	import { startSocket, endSocket } from '$root/lib/edgeServer';
-	import { character, debugMode, webrtcStream, monitoring } from '$root/stores/config';
-
-	import Slider from '$root/components/shared/Slider.svelte';
-	import Switch from '$root/components/shared/Switch.svelte';
-	import Radio from '$root/components/shared/Radio.svelte';
 	import BackSvg from '$root/components/shared/BackSvg.svelte';
 
 	import SlidableSection from '$root/components/SlidableSection.svelte';
-	import Header from '$root/components/Header.svelte';
+	import Settings from '$root/components/Settings.svelte';
 
 	export let mobile: string;
-
-	const socket = startSocket();
-
-	const characterOptions = [
-		{
-			value: 'male_kitty',
-			label: '고양이1'
-		},
-		{
-			value: 'female_kitty',
-			label: '고양이2'
-		},
-		{
-			value: 'sample',
-			label: '스마일 (말풍선)'
-		}
-	];
-
-	const handleChange = (event: CustomEvent<{ volume: number }>) => {
-		const volume = event.detail;
-		console.log(volume);
-
-		socket.emit('volumeChange', volume);
-	};
-
-	onDestroy(() => {
-		endSocket(socket);
-	});
 </script>
 
 <SlidableSection rightUrl="/apps">
@@ -80,19 +44,7 @@
 			</span>
 		</div>
 		<div class="content">
-			<Radio
-				options={characterOptions}
-				fontSize={16}
-				legend="케릭터"
-				bind:userSelected={$character}
-			/>
-			<Switch bind:value={$debugMode} label="Debug Mode" design="slider" />
-			<Switch bind:value={$webrtcStream} label="WebRTC" design="slider" />
-			<Switch bind:value={$monitoring} label="Monitoring" design="slider" />
-
-			<Slider on:change={handleChange} />
-
-			<a href="/apps">Apps</a>
+			<Settings />
 		</div>
 	</div>
 </SlidableSection>
@@ -122,6 +74,7 @@
 	.header {
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
@@ -132,5 +85,8 @@
 	.content {
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		padding: var(--spacing-32);
 	}
 </style>

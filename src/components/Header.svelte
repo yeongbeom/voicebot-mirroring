@@ -110,7 +110,7 @@
 	}
 
 	form.focus {
-		border: 3px solid greenyellow;
+		border: 3px solid var(--color-green);
 	}
 
 	form.disabled {

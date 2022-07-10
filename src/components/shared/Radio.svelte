@@ -21,7 +21,7 @@
 	style="font-size:{fontSize}px; flex-direction:{flexDirection}"
 	id={`group-${uniqueID}`}
 >
-	<div class="legend" id={`label-${uniqueID}`}>{legend}</div>
+	<!-- <div class="legend" id={`label-${uniqueID}`}>{legend}</div> -->
 	{#each options as { value, label }}
 		<input class="sr-only" type="radio" id={slugify(label)} bind:group={userSelected} {value} />
 		<label for={slugify(label)}> {label} </label>
@@ -35,9 +35,11 @@
 	}
 
 	.group-container {
-		border-radius: 2px;
-		display: flex;
-		flex-direction: row;
+		/* border-radius: 2px; */
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		width: 100%;
+		gap: 42px;
 	}
 
 	.legend {
