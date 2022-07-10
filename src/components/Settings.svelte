@@ -9,6 +9,8 @@
 	import Switch from '$root/components/shared/Switch.svelte';
 
 	let developer = false;
+	let age: boolean;
+	let sex: string;
 
 	const characterOptions = [
 		{
@@ -76,7 +78,7 @@
 		fontSize={16}
 		flexDirection={'row'}
 		legend=""
-		bind:userSelected={$character}
+		bind:userSelected={sex}
 	/>
 
 	<span>사용자 나이</span>
@@ -85,7 +87,7 @@
 		fontSize={16}
 		flexDirection={'row'}
 		legend=""
-		bind:userSelected={$character}
+		bind:userSelected={age}
 	/>
 
 	<span>볼륨</span>

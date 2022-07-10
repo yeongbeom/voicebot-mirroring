@@ -56,9 +56,9 @@
 		<span class:user>
 			{#if user}
 				{#if mobile?.length === 7}
-					전화번호 010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
+					비상연락망 010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
 				{:else if mobile?.length === 8}
-					전화번호 010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
+					비상연락망 010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
 				{/if}
 			{:else}전화번호 010
 				<input
@@ -152,5 +152,6 @@
 
 	span.user {
 		font-weight: bold;
+		opacity: 0.8;
 	}
 </style>

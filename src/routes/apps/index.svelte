@@ -24,6 +24,7 @@
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 
 	import Header from '$root/components/Header.svelte';
+	import Weather from '$root/components/Weather.svelte';
 
 	let mobile: string | undefined;
 
@@ -53,7 +54,7 @@
 
 <ErrorMessage error={Boolean(error)}>{error}</ErrorMessage>
 
-<SlidableSection rightUrl="/" leftUrl='/account'>
+<SlidableSection rightUrl="/" leftUrl="/apps/clock">
 	<div class="grid-container">
 		<div class="header">
 			<Header
@@ -67,7 +68,7 @@
 		<div class="content__left">
 			<a href="/apps/therapy">테라피</a>
 		</div>
-		<div class="content__rightup">날씨</div>
+		<div class="content__rightup"><Weather /></div>
 		<div class="content__rightdown">알람</div>
 	</div>
 	{#if focus}
@@ -84,7 +85,7 @@
 		--grid-row-gap: 1rem;
 		--grid-column-gap: 1rem;
 
-		--border-radius: 3rem;
+		--border-radius: 3.2rem;
 	}
 
 	.grid-container {
