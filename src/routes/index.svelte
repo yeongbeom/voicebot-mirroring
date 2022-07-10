@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	import { debugMode, webrtcStream } from '$root/stores/config';
+	import { character, debugMode, webrtcStream } from '$root/stores/config';
+
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 	import Talk from '$root/components/talk/Talk.svelte';
-	import DefaultExpression from '$root/components/expressions/DefaultExpression.svelte';
+	import SampleExpression from '$root/components/expressions/SampleExpression.svelte';
+	import MaleKittyExpression from '$root/components/expressions/MaleKittyExpression.svelte';
+	import FemaleKittyExpression from '$root/components/expressions/FemaleKittyExpression.svelte';
 	import SpeechBubble from '$root/components/expressions/SpeechBubble.svelte';
 	import WebRtc from '$root/components/WebRtc.svelte';
 	import TestExpression from '$root/components/expressions/TestExpression.svelte';
@@ -20,22 +23,25 @@
 </script>
 
 <svelte:head>
-	<title>공감대화</title>
+	<title>Voicebot</title>
 </svelte:head>
 
-<div>
-	<Talk />
-</div>
+<Talk />
 
 <SlidableSection leftUrl="/apps">
 	<div class="voicebot">
-		<div class="expression">
-			<DefaultExpression />
-		</div>
-
-		<div class="speech-bubble">
-			<SpeechBubble />
-		</div>
+		{#if $character === 'male_kitty'}
+			<MaleKittyExpression />
+		{:else if $character === 'female_kitty'}
+			<FemaleKittyExpression />
+		{:else if $character === 'sample'}
+			<div class="expression">
+				<SampleExpression />
+			</div>
+			<div class="speech-bubble">
+				<SpeechBubble />
+			</div>
+		{/if}
 	</div>
 </SlidableSection>
 {#if $webrtcStream === 'on'}

@@ -5,7 +5,8 @@ export const clickOutside = (node: any) => {
 			node &&
 			!node.contains(event.target) &&
 			!event.defaultPrevented &&
-			!(event.target instanceof HTMLButtonElement)
+			!(event.target instanceof HTMLButtonElement) &&
+			!(event.target instanceof HTMLUnknownElement)
 		) {
 			node.dispatchEvent(new CustomEvent('click_outside'));
 		}

@@ -5,3 +5,9 @@
 <main>
 	<slot />
 </main>
+
+<!-- <style>
+	main {
+		overflow: hidden;
+	}
+</style> -->

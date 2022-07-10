@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- Chromium-based browser
+- Chromium browser 86
 
 - Peripherals
 
@@ -32,8 +32,7 @@
   - Install nodejs and packages
 
     ```bash
-    sudo su
-    curl -fsSL https://deb.nodesource.com/setup_17.x | bash -
+    curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -
     ```
 
     ```bash

@@ -19,24 +19,27 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { session } from '$app/stores';
 
-	import { enhance } from '$root/actions/form';
-	import { clickOutside } from '$root/actions/clickOutside';
-
 	import ErrorMessage from '$root/components/ErrorMessage.svelte';
 	import Keypad from '$root/components/Keypad.svelte';
 	import SlidableSection from '$root/components/SlidableSection.svelte';
+
+	import Header from '$root/components/Header.svelte';
 
 	let mobile: string | undefined;
 
 	let focus = false;
 
-	export let error: string;
-	export let success = '';
-	export let user: User;
+	let error = '';
+	// let success = '';
+
+	if ($session.user) mobile = $session.user.emergencyMobile;
+
+	const handleSubmit = (event: CustomEvent<{ emergencyMobile: string }>) => {
+		$session.user = event.detail;
+	};
 
 	onMount(() => {
 		console.debug('apps/index.svelte mounted');
-		if ($session.user) mobile = $session.user.emergencyMobile;
 	});
 
 	onDestroy(() => {
@@ -45,75 +48,101 @@
 </script>
 
 <svelte:head>
-	<title>APP</title>
+	<title>Applications</title>
 </svelte:head>
 
-<div>{user?.emergencyMobile}</div>
+<ErrorMessage error={Boolean(error)}>{error}</ErrorMessage>
 
-<div>
-	session: {$session.user?.emergencyMobile}
-</div>
-
-<div>
-	<ErrorMessage error={Boolean(error)}>{error}</ErrorMessage>
-</div>
-
-<SlidableSection rightUrl="/">
-	<form
-		action="/apps"
-		method="post"
-		use:enhance={{
-			result: async (response) => {
-				const result = await response.json();
-				error = result.error;
-				success = result.success;
-				user = result.user;
-				if (mobile) $session.user = { emergencyMobile: mobile };
-			}
-		}}
-	>
-		<span> 010 </span>
-		<span>
-			<input
-				type="text"
-				name="mobile"
-				aria-label="Emergency mobile"
-				placeholder="비상연락망"
-				minlength="7"
-				maxlength="8"
-				pattern="[0-9]+"
-				required
-				bind:value={mobile}
-				use:clickOutside
-				on:focus={() => (focus = true)}
-				on:click_outside={() => (focus = false)}
+<SlidableSection rightUrl="/" leftUrl='/account'>
+	<div class="grid-container">
+		<div class="header">
+			<Header
+				on:error={(event) => (error = event.detail)}
+				on:submit={handleSubmit}
+				user={$session.user}
+				bind:focus
+				bind:mobile
 			/>
-		</span>
-		{#if !$session.user}
-			<span>
-				<button>로그인</button>
-			</span>
-		{/if}
-	</form>
-	{#if $session.user}
-		<a href="/auth/logout">Log out</a>
-		<a href="/account">My account</a>
-	{/if}
-	<a href="/apps/therapy">Multimodal therapy</a>
-
+		</div>
+		<div class="content__left">
+			<a href="/apps/therapy">테라피</a>
+		</div>
+		<div class="content__rightup">날씨</div>
+		<div class="content__rightdown">알람</div>
+	</div>
 	{#if focus}
-		<div>
+		<div class="modal">
 			<Keypad bind:value={mobile} />
 		</div>
 	{/if}
 </SlidableSection>
 
 <style>
-	form {
-		height: 50vh;
+	:root {
+		--grid-padding__top: 3.5rem;
+		--grid-column__header: 14vh;
+		--grid-row-gap: 1rem;
+		--grid-column-gap: 1rem;
+
+		--border-radius: 3rem;
 	}
 
-	input:valid {
-		border: 3px solid greenyellow;
+	.grid-container {
+		height: 100%;
+		padding: var(--grid-padding__top) 2.5rem;
+
+		display: grid;
+		column-gap: var(--grid-column-gap);
+		row-gap: var(--grid-row-gap);
+		grid-template-columns: repeat(2, 1fr);
+		grid-template-rows: var(--grid-column__header) repeat(
+				2,
+				calc(43vh - var(--grid-row-gap) - var(--grid-padding__top))
+			);
+	}
+
+	.header {
+		grid-row-start: 1;
+		grid-row-end: 2;
+		grid-column-start: 1;
+		grid-column-end: 3;
+
+		border: 3px solid darkgray;
+		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+	}
+
+	.content__left {
+		grid-row-start: 2;
+		grid-row-end: 4;
+		grid-column-start: 1;
+		grid-column-end: 2;
+
+		border: 3px solid darkgray;
+		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+	}
+
+	.content__rightup {
+		border: 3px solid darkgray;
+		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+	}
+
+	.content__rightdown {
+		border: 3px solid darkgray;
+		border-radius: var(--border-radius);
+		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+	}
+
+	.modal {
+		position: fixed; /* Stay in place */
+		z-index: 1; /* Sit on top */
+		top: calc(var(--grid-padding__top) + var(--grid-column__header) + var(--grid-row-gap));
+		left: calc(50% - 220px);
+
+		height: calc(
+			100% - var(--grid-padding__top) * 2 - var(--grid-column__header) - var(--grid-row-gap)
+		);
 	}
 </style>
