@@ -96,18 +96,27 @@ const io = new Server(server, {
 
 io.on('connection', (socket) => {
 	const client = socket.id;
-
 	console.debug(`Socket connected (${client})`);
 
 	// socket.emit('eventFromServer', 'Socket connected');
 
-	socket.on('volumeChange', async (volume) => {
-		const { stdout, stderr } = await execPromise('ls | grep js');
+	socket.on('volumeChange', async (command) => {
+		const shellScript = path.resolve(__dirname, 'shell', 'volume.sh');
+		const { stdout, stderr } = await execPromise(
+			`sh ${shellScript} ${command.interface} ${command.volume}`
+		);
+
 		if (stderr) {
+			socket.emit('setVolume', { error: stderr });
 			console.error(`stderr: ${stderr}`);
 			return;
 		}
-		console.debug('stdout:', stdout);
+
+		console.debug(`stdout: ${stdout}`);
+
+		if (socket != null) {
+			socket.emit('setVolume', { success: stdout });
+		}
 	});
 
 	socket.on('startYeelight', async () => {

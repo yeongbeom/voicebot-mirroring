@@ -52,9 +52,15 @@
 
 	const handleChange = (event: CustomEvent<{ volume: number }>) => {
 		const volume = event.detail;
-		console.log(volume);
+		const device = 'Master';
 
-		socket.emit('volumeChange', volume);
+		socket.emit('volumeChange', { interface: device, volume: volume });
+		socket.on('setVolume', (message) => {
+			const { success, error } = message;
+
+			if (success) console.debug(success);
+			if (error) throw new Error(error);
+		});
 	};
 
 	onDestroy(() => {

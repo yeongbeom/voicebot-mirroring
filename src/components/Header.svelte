@@ -11,7 +11,7 @@
 	export let user: any;
 	export let focus = false;
 	export let active = false;
-	export let mobile: string | undefined;
+	export let mobile: string | undefined = '';
 
 	const dispatch = createEventDispatcher();
 
