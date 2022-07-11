@@ -52,7 +52,7 @@
 		appearance: none;
 		width: 25px; /* Set a specific slider handle width */
 		height: 25px; /* Slider handle height */
-		background: #04aa6d; /* Green background */
+		background: cornflowerblue;
 		cursor: pointer; /* Cursor on hover */
 		border-radius: 8px;
 	}

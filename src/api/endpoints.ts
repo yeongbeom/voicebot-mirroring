@@ -1,8 +1,8 @@
 const gnictPort = '20080';
 const gnictHost = 'gnlabs.iptime.org';
 const ketiPort = '28443';
-// const ketiHost = "ketiair.com";
-const ketiHost = '115.95.228.155';
+const ketiHost = 'ketiair.com';
+// const ketiHost = '115.95.228.155';
 
 const protocol = 'https';
 const pathTalk = 'talk';
