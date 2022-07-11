@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
+	import { goto } from '$app/navigation';
 
 	import ErrorMessage from '$root/components/ErrorMessage.svelte';
 
@@ -27,6 +28,11 @@
 	let stream: any = null;
 	let mediaRecorder: any = null;
 	let audioSource: any;
+
+	let command: string | null = null;
+	let cmdResText: string;
+	let cmdResEmotion: string;
+	let continued = false;
 
 	const DELAY_RELOAD = 1000 * 3;
 	const WATCHDOG_LIMIT = 20;
@@ -103,9 +109,30 @@
 			.join('');
 
 		if (results[0].isFinal) {
-			if (text.includes('확인')) {
-				console.log('확인?');
+			if (text.includes('테라피') || text.includes('날씨') || text.includes('알람')) {
+				command = '/apps';
+				cmdResText = '서비스 화면으로 안내합니다.';
+				cmdResEmotion = $expression.neutral;
+			} else if (text.includes('시계')) {
+				command = '/apps/clock';
+				cmdResText = '시계 화면으로 안내합니다.';
+				cmdResEmotion = $expression.neutral;
 			}
+
+			if (text.includes('아파') && !continued) {
+				command = 'emergency';
+				cmdResText = '많이 아프세요?';
+				cmdResEmotion = $expression.neutral;
+
+				continued = true;
+			} else if (text.includes('아파') && continued) {
+				command = 'emergency';
+				cmdResText = '응급상황이 탐지되어, 비상연락처로 연락하겠습니다.';
+				cmdResEmotion = $expression.worry;
+
+				continued = false;
+			}
+
 			$say = text;
 		}
 
@@ -125,8 +152,10 @@
 			uid: 'temp-uid'
 		};
 		try {
-			const empathyRes = await fetchEmpathyData(empathyReq); // [TODO] connect to db
-			const audioData: ArrayBuffer = await fetchTtsData(empathyRes.text);
+			let empathyRes; // [TODO] connect to db
+
+			if (!command) empathyRes = await fetchEmpathyData(empathyReq);
+			const audioData: ArrayBuffer = await fetchTtsData(command ? cmdResText : empathyRes.text);
 
 			const audioCtx = new AudioContext();
 
@@ -139,8 +168,8 @@
 			});
 
 			//@ts-ignore
-			$currentExpression = $expression[empathyRes.emotion];
-			$say = empathyRes.text;
+			$currentExpression = $expression[command ? cmdResEmotion : empathyRes.emotion];
+			$say = command ? cmdResText : empathyRes.text;
 			$currentStatus = $status.talking;
 		} catch (error) {
 			setIdle();
@@ -160,6 +189,11 @@
 			}
 			case $status.idle: {
 				$currentExpression = $expression.neutral;
+
+				if (command !== 'emergency' && command !== null) goto(command);
+				if (!command) continued = false;
+				command = null;
+
 				break;
 			}
 			case $status.listening: {

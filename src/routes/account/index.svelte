@@ -28,26 +28,24 @@
 	export let mobile: string;
 </script>
 
-<SlidableSection rightUrl="/apps">
-	<div class="grid-container">
-		<div class="header">
-			<a href="/apps"><BackSvg /></a>
-			<span style={'font-size: 32px'}> 설정 </span>
-			<span>
-				{#if mobile === '비회원'}
-					{mobile}
-				{:else if mobile.length === 7}
-					010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
-				{:else if mobile.length === 8}
-					010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
-				{/if}
-			</span>
-		</div>
-		<div class="content">
-			<Settings />
-		</div>
+<div class="grid-container">
+	<div class="header">
+		<a href="/apps"><BackSvg /></a>
+		<span style={'font-size: 32px'}> 설정 </span>
+		<span>
+			{#if mobile === '비회원'}
+				{mobile}
+			{:else if mobile.length === 7}
+				010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
+			{:else if mobile.length === 8}
+				010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
+			{/if}
+		</span>
 	</div>
-</SlidableSection>
+	<div class="content">
+		<Settings />
+	</div>
+</div>
 
 <style>
 	:root {
