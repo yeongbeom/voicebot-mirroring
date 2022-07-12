@@ -122,7 +122,7 @@
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 
 		background: linear-gradient(to bottom, #b7eaff 0%, #94dfff 100%);
-		opacity: 0.7;
+		opacity: 0.8;
 	}
 
 	.content__rightdown {
