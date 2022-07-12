@@ -1,72 +1,27 @@
 <script lang="ts">
-	import { onDestroy } from 'svelte';
-
-	import { startSocket, endSocket } from '$root/lib/edgeServer';
 	import { character, debugMode, webrtcStream, monitoring } from '$root/stores/config';
+	import { yeelight } from '$root/stores/socket';
+
+	import SocketManager from '$root/components/SocketManager.svelte';
 
 	import Slider from '$root/components/shared/Slider.svelte';
 	import Radio from '$root/components/shared/Radio.svelte';
 	import Switch from '$root/components/shared/Switch.svelte';
 
+	import { characterOptions, sexOptions, ageOptions, lightOptions } from './options';
+
 	let developer = false;
 	let age: boolean;
 	let sex: string;
+	let volume = 50; // [TODO]: get volume info from edge server
+	let ready: string;
 
-	const characterOptions = [
-		{
-			value: 'male_kitty',
-			label: '고양이1'
-		},
-		{
-			value: 'female_kitty',
-			label: '고양이2'
-		},
-		{
-			value: 'sample',
-			label: '스마일'
-		}
-	];
-
-	const sexOptions = [
-		{
-			value: 'male',
-			label: '남성'
-		},
-		{
-			value: 'female',
-			label: '여성'
-		}
-	];
-	const ageOptions = [
-		{
-			value: true,
-			label: '50대 이상'
-		},
-		{
-			value: false,
-			label: '50대 미만'
-		}
-	];
-
-	const socket = startSocket();
-
-	const handleChange = (event: CustomEvent<{ volume: number }>) => {
-		const volume = event.detail;
-		const device = 'Master';
-
-		socket.emit('volumeChange', { interface: device, volume: volume });
-		socket.on('setVolume', (message) => {
-			const { success, error } = message;
-
-			if (success) console.debug(success);
-			if (error) throw new Error(error);
-		});
+	const handleVolumeChange = (event: CustomEvent) => {
+		volume = event.detail;
 	};
-
-	onDestroy(() => {
-		endSocket(socket);
-	});
 </script>
+
+<SocketManager bind:ready bind:volume />
 
 <div class="grid-container">
 	<span>캐릭터</span>
@@ -96,8 +51,18 @@
 		bind:userSelected={age}
 	/>
 
-	<span>볼륨</span>
-	<Slider on:change={handleChange} />
+	<span class:disabled={ready === 'none'}>볼륨</span>
+	<Slider disabled={ready === 'none'} on:change={handleVolumeChange} {volume} />
+
+	<span class:disabled={ready !== 'both'}>스마트조명</span>
+	<Radio
+		disabled={ready !== 'both'}
+		options={lightOptions}
+		fontSize={16}
+		flexDirection={'row'}
+		legend=""
+		bind:userSelected={$yeelight}
+	/>
 
 	<span>와이파이</span>
 	<span>정상 연결 상태</span>
@@ -124,5 +89,9 @@
 		height: 100%;
 
 		overflow: scroll;
+	}
+
+	.disabled {
+		color: lightgray;
 	}
 </style>

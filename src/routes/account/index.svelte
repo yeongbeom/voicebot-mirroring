@@ -22,8 +22,7 @@
 <script lang="ts">
 	import BackSvg from '$root/components/shared/BackSvg.svelte';
 
-	import SlidableSection from '$root/components/SlidableSection.svelte';
-	import Settings from '$root/components/Settings.svelte';
+	import Settings from '$root/components/settings/Settings.svelte';
 
 	export let mobile: string;
 </script>

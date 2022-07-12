@@ -4,7 +4,7 @@ import util from 'util';
 import { exec } from 'child_process';
 import express, { Express, Request, Response } from 'express';
 import { createServer } from 'http';
-import { Server } from 'socket.io';
+import { Server, Socket } from 'socket.io';
 import dotenv from 'dotenv';
 
 import { Client } from 'yeelight-node';
@@ -16,6 +16,8 @@ dotenv.config();
 const execPromise = util.promisify(exec);
 const app: Express = express();
 const server = createServer(app);
+
+let socket: Socket | null = null;
 
 app.get('/video', (req: Request, res: Response) => {
 	const filepath = path.join(__dirname, 'media', 'sample.mp4');
@@ -81,9 +83,16 @@ const poll = async (fn: any, ms: number) => {
 poll(() => {
 	const smartLight = new Client();
 	console.debug('Finding Yeelight...');
+
 	smartLight.bind((light: any) => {
 		yeelight = light;
+		yeelight.set_power('on');
 		console.debug('Yeelight has been connected');
+
+		if (socket) {
+			console.debug('Send Yeelight socket connection event');
+			socket.emit('yeelight', { success: 'YeeLight connected', yeelight });
+		}
 	});
 }, 2000);
 
@@ -94,11 +103,16 @@ const io = new Server(server, {
 	}
 });
 
-io.on('connection', (socket) => {
+io.on('connection', (pSocket) => {
+	socket = pSocket;
 	const client = socket.id;
 	console.debug(`Socket connected (${client})`);
 
-	// socket.emit('eventFromServer', 'Socket connected');
+	socket.emit('main', { success: 'Main socket connected', client });
+	if (socket) {
+		console.debug('Send Yeelight socket connection event');
+		socket.emit('yeelight', { success: 'YeeLight connected', yeelight });
+	}
 
 	socket.on('volumeChange', async (command) => {
 		const shellScript = path.resolve(__dirname, 'shell', 'volume.sh');
@@ -107,16 +121,14 @@ io.on('connection', (socket) => {
 		);
 
 		if (stderr) {
-			socket.emit('setVolume', { error: stderr });
+			socket!.emit('setVolume', { error: stderr });
 			console.error(`stderr: ${stderr}`);
 			return;
 		}
 
 		console.debug(`stdout: ${stdout}`);
 
-		if (socket != null) {
-			socket.emit('setVolume', { success: stdout });
-		}
+		socket!.emit('setVolume', { success: stdout });
 	});
 
 	socket.on('startYeelight', async () => {

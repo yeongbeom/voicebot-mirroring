@@ -18,8 +18,5 @@
 	<slot />
 </main>
 
-<!-- <style>
-	main {
-		overflow: hidden;
-	}
-</style> -->
+<style>
+</style>

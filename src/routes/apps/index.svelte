@@ -30,6 +30,8 @@
 
 	let focus = false;
 
+	let therapyMode = 'video';
+
 	let error = '';
 	// let success = '';
 
@@ -66,7 +68,8 @@
 			/>
 		</div>
 		<div class="content__left">
-			<a href="/apps/therapy">테라피</a>
+			<input type="text" bind:value={therapyMode} />
+			<a href="/apps/therapy/{therapyMode}">테라피</a>
 		</div>
 		<div class="content__rightup"><Weather /></div>
 		<div class="content__rightdown">알람</div>

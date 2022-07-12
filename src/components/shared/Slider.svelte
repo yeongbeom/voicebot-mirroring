@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 
-	let volume: number;
+	export let volume: number;
+	export let disabled: boolean;
 
 	const dispatch = createEventDispatcher();
 
@@ -12,6 +13,7 @@
 
 <div class="slidecontainer">
 	<input
+		{disabled}
 		on:change={handleVolume}
 		type="range"
 		min="1"
@@ -39,6 +41,10 @@
 		-webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
 		transition: opacity 0.2s;
 		border-radius: 8px;
+	}
+
+	.slider:disabled {
+		background: gray; /* Grey background */
 	}
 
 	/* Mouse-over effects */

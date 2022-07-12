@@ -60,6 +60,5 @@ pip install gdown
 ### Media
 
 ```bash
-mkdir dist
 /home/pi/.local/bin/gdown https://drive.google.com/drive/folders/1EzQYUTTUvaCoHJxrn7jCHh-MHFcdFe6- -O dist/ --folder
 ```

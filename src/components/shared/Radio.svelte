@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	// based on suggestions from:
 	// Sami Keijonen https://webdesign.tutsplus.com/tutorials/how-to-make-custom-accessible-checkboxes-and-radio-buttons--cms-32074
 	// and Inclusive Components by Heydon Pickering https://inclusive-components.design/toggle-button/
@@ -8,6 +8,7 @@
 	export let userSelected = options[0].value;
 	export let fontSize = 16;
 	export let flexDirection = 'column';
+	export let disabled: boolean;
 
 	const uniqueID = Math.floor(Math.random() * 100);
 
@@ -23,7 +24,14 @@
 >
 	<!-- <div class="legend" id={`label-${uniqueID}`}>{legend}</div> -->
 	{#each options as { value, label }}
-		<input class="sr-only" type="radio" id={slugify(label)} bind:group={userSelected} {value} />
+		<input
+			{disabled}
+			class="sr-only"
+			type="radio"
+			id={slugify(label)}
+			bind:group={userSelected}
+			{value}
+		/>
 		<label for={slugify(label)}> {label} </label>
 	{/each}
 </div>
@@ -113,7 +121,8 @@
 	}
 
 	input[type='radio']:disabled + label {
-		color: darken(var(--gray, #ccc), 10);
+		/* color: darken(var(--gray, #ccc), 10); */
+		color: lightgray;
 	}
 
 	input[type='radio']:disabled + label::before {
