@@ -1,0 +1,1 @@
+amixer sset \"$1\" $2%

@@ -22,46 +22,34 @@
 <script lang="ts">
 	import BackSvg from '$root/components/shared/BackSvg.svelte';
 
-	import SlidableSection from '$root/components/SlidableSection.svelte';
-	import Settings from '$root/components/Settings.svelte';
+	import Settings from '$root/components/settings/Settings.svelte';
 
 	export let mobile: string;
 </script>
 
-<SlidableSection rightUrl="/apps">
-	<div class="grid-container">
-		<div class="header">
-			<a href="/apps"><BackSvg /></a>
-			<span style={'font-size: 32px'}> 설정 </span>
-			<span>
-				{#if mobile === '비회원'}
-					{mobile}
-				{:else if mobile.length === 7}
-					010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
-				{:else if mobile.length === 8}
-					010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
-				{/if}
-			</span>
-		</div>
-		<div class="content">
-			<Settings />
-		</div>
+<div class="grid-container">
+	<div class="header">
+		<a href="/apps"><BackSvg /></a>
+		<span style={'font-size: 32px'}> 설정 </span>
+		<span>
+			{#if mobile === '비회원'}
+				{mobile}
+			{:else if mobile.length === 7}
+				010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
+			{:else if mobile.length === 8}
+				010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
+			{/if}
+		</span>
 	</div>
-</SlidableSection>
+	<div class="content">
+		<Settings />
+	</div>
+</div>
 
 <style>
-	:root {
-		--grid-padding__top: 3.5rem;
-		--grid-column__header: 14vh;
-		--grid-row-gap: 1rem;
-		--grid-column-gap: 1rem;
-
-		--border-radius: 3rem;
-	}
-
 	.grid-container {
 		height: 100%;
-		padding: var(--grid-padding__top) 2.5rem;
+		padding: var(--grid-padding__top) var(--grid-padding__left);
 
 		display: grid;
 		column-gap: var(--grid-column-gap);

@@ -24,11 +24,10 @@
 			if (leftUrl !== null && rightUrl === null) {
 				sign = -1;
 				goto(leftUrl);
+			} else if (leftUrl === null && rightUrl !== null) {
+				sign = 1;
+				goto(rightUrl);
 			}
-			// else if (leftUrl === null && rightUrl !== null) {
-			// 	sign = 1;
-			// 	goto(rightUrl);
-			// }
 		}
 
 		console.log(`direction: ${direction}`);

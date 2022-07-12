@@ -14,4 +14,10 @@
 		width: 4.6rem;
 		height: 4.6rem;
 	}
+
+	svg:active {
+		background-color: #f7f7f7;
+		border-color: #000000;
+		transform: scale(0.96);
+	}
 </style>
