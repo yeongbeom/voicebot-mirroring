@@ -69,6 +69,7 @@
 	}
 
 	onDestroy(() => {
+		socket.emit('endYeelight');
 		endSocket(socket);
 
 		$connection.main = '';

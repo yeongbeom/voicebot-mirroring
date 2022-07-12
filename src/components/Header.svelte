@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 	import { enhance } from '$root/actions/form';
 
@@ -53,14 +54,16 @@
 			}
 		}}
 	>
-		<span class:user>
+		<span>
 			{#if user}
-				{#if mobile?.length === 7}
-					비상연락망 010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
-				{:else if mobile?.length === 8}
-					비상연락망 010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
-				{/if}
-			{:else}전화번호 010
+				<span class:user in:fade>
+					{#if mobile?.length === 7}
+						비상연락망 010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
+					{:else if mobile?.length === 8}
+						비상연락망 010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
+					{/if}
+				</span>
+			{:else}휴대폰 010
 				<input
 					type="text"
 					name="mobile"
@@ -85,7 +88,7 @@
 			<Button {active} type="submit" form="user">로그인</Button>
 		</span>
 	{:else}
-		<span>
+		<span in:fade>
 			<a href="/auth/logout"><LogoutSvg /></a>
 		</span>
 	{/if}

@@ -10,7 +10,6 @@ import dotenv from 'dotenv';
 import { Client } from 'yeelight-node';
 
 import { wait, toRgbValue } from './utils';
-import { send } from 'process';
 
 dotenv.config();
 

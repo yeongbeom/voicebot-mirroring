@@ -24,13 +24,12 @@
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 
 	import Header from '$root/components/Header.svelte';
+	import Therapy from '$root/components/Therapy.svelte';
 	import Weather from '$root/components/Weather.svelte';
 
 	let mobile: string | undefined;
 
 	let focus = false;
-
-	let therapyMode = 'sample';
 
 	let error = '';
 	// let success = '';
@@ -68,8 +67,7 @@
 			/>
 		</div>
 		<div class="content__left">
-			<input type="text" bind:value={therapyMode} />
-			<a href="/apps/therapy/{therapyMode}">테라피</a>
+			<Therapy />
 		</div>
 		<div class="content__rightup"><Weather /></div>
 		<div class="content__rightdown">알람</div>
@@ -122,6 +120,9 @@
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background: linear-gradient(to bottom, #b7eaff 0%, #94dfff 100%);
+		opacity: 0.7;
 	}
 
 	.content__rightdown {
