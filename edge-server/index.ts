@@ -9,7 +9,8 @@ import dotenv from 'dotenv';
 
 import { Client } from 'yeelight-node';
 
-import { wait } from './utils';
+import { wait, toRgbValue } from './utils';
+import { send } from 'process';
 
 dotenv.config();
 
@@ -19,9 +20,124 @@ const server = createServer(app);
 
 let socket: Socket | null = null;
 
-app.get('/video', (req: Request, res: Response) => {
-	const filepath = path.join(__dirname, 'media', 'sample.mp4');
-	const stat = fs.statSync(filepath);
+app.get('/:mode', (req: Request, res: Response) => {
+	const mode = req.params.mode;
+
+	if (yeelight) {
+		const cfTest = [
+			// duration (ms), mode, rgb, brightness
+			[100, 1, toRgbValue(255, 0, 0), 100],
+			[900, 7, toRgbValue(255, 255, 255), 100],
+			[100, 1, toRgbValue(0, 255, 0), 100],
+			[900, 7, toRgbValue(255, 255, 255), 100],
+			[100, 1, toRgbValue(0, 0, 255), 100],
+			[900, 7, toRgbValue(255, 255, 255), 100]
+		];
+
+		const cfFire = [
+			[1800, 1, toRgbValue(255, 150, 240), 80],
+			[960, 1, toRgbValue(255, 150, 200), 30],
+			[1500, 1, toRgbValue(255, 150, 240), 70],
+			[900, 1, toRgbValue(255, 150, 180), 60],
+			[600, 1, toRgbValue(255, 150, 240), 50],
+			[960, 1, toRgbValue(255, 150, 200), 10],
+			[1500, 1, toRgbValue(255, 150, 240), 50],
+			[900, 1, toRgbValue(255, 150, 180), 90]
+		];
+
+		const cfAnger = [
+			[10000, 1, toRgbValue(255, 150, 180), 80],
+			[8000, 1, toRgbValue(120, 255, 0), 80],
+			[18000, 1, toRgbValue(0, 100, 0), 80],
+			[10000, 1, toRgbValue(255, 130, 100), 80],
+			[7000, 1, toRgbValue(255, 150, 180), 80],
+			[11000, 1, toRgbValue(120, 255, 0), 80],
+			[18000, 1, toRgbValue(0, 100, 0), 80],
+			[6000, 1, toRgbValue(255, 130, 100), 80]
+		];
+
+		const cfHappy = [
+			[1300, 1, toRgbValue(190, 20, 20), 80],
+			[1700, 1, toRgbValue(200, 180, 0), 80],
+			[1500, 1, toRgbValue(255, 130, 100), 80],
+			[1900, 1, toRgbValue(120, 255, 0), 80],
+			[1700, 1, toRgbValue(200, 10, 10), 80],
+			[2100, 1, toRgbValue(200, 180, 0), 80],
+			[1500, 1, toRgbValue(255, 130, 100), 80],
+			[1900, 1, toRgbValue(120, 255, 0), 80]
+		];
+
+		const cfSad = [
+			[2300, 1, toRgbValue(200, 180, 0), 80],
+			[2800, 1, toRgbValue(255, 150, 240), 80],
+			[2500, 1, toRgbValue(30, 30, 120), 80],
+			[2100, 1, toRgbValue(120, 205, 50), 80],
+			[2300, 1, toRgbValue(200, 180, 0), 80],
+			[2800, 1, toRgbValue(255, 150, 240), 80],
+			[2300, 1, toRgbValue(30, 30, 120), 80],
+			[2800, 1, toRgbValue(120, 205, 50), 80]
+		];
+
+		const cfVigor = [
+			[10000, 1, toRgbValue(70, 70, 230), 80],
+			[8000, 1, toRgbValue(80, 80, 230), 80],
+			[7000, 1, toRgbValue(60, 60, 230), 80],
+			[18000, 1, toRgbValue(50, 50, 230), 80],
+			[11000, 1, toRgbValue(80, 70, 230), 80],
+			[9000, 1, toRgbValue(70, 60, 230), 80],
+			[10000, 1, toRgbValue(50, 70, 230), 80]
+		];
+
+		const cfMed = [
+			[8300, 1, toRgbValue(200, 100, 150), 80],
+			[6300, 1, toRgbValue(120, 205, 30), 80],
+			[5300, 1, toRgbValue(160, 30, 30), 80],
+			[10300, 1, toRgbValue(200, 180, 0), 80],
+			[10300, 1, toRgbValue(200, 100, 150), 80],
+			[8300, 1, toRgbValue(120, 205, 30), 80],
+			[6300, 1, toRgbValue(160, 30, 30), 80],
+			[10300, 1, toRgbValue(200, 180, 0), 80]
+		];
+
+		yeelight.set_power('on');
+		switch (mode) {
+			case 'sample':
+				yeelight.start_cf(0, 2, cfTest);
+				break;
+			case 'sample1':
+				yeelight.start_cf(0, 2, cfAnger);
+				break;
+			case 'sample2':
+				yeelight.start_cf(0, 2, cfFire);
+				break;
+			case 'sample3':
+				yeelight.start_cf(0, 2, cfHappy);
+				break;
+			case 'sample4':
+				yeelight.start_cf(0, 2, cfMed);
+				break;
+			case 'sample5':
+				yeelight.start_cf(0, 2, cfSad);
+				break;
+			case 'sample6':
+				yeelight.start_cf(0, 2, cfVigor);
+				break;
+			default:
+				yeelight.set_power('off');
+		}
+	}
+
+	const filepath = path.join(__dirname, 'media', `${mode}.mp4`);
+
+	let stat;
+	try {
+		stat = fs.statSync(filepath);
+	} catch (error) {
+		console.debug(error);
+		socket?.emit('media', error);
+		return;
+	}
+
 	const fileSize = stat.size;
 	const range = req.headers.range;
 	/*when we seek the video it will put
@@ -140,6 +256,10 @@ io.on('connection', (pSocket) => {
 
 	socket.on('setYeelight', (color: [number, number, number]) => {
 		yeelight.set_rgb(color);
+	});
+
+	socket.on('cfYeelight', (colorList: [][]) => {
+		yeelight.start_cf(0, 2, colorList);
 	});
 
 	socket.on('endYeelight', () => {

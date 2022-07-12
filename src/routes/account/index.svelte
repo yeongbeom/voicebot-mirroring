@@ -47,18 +47,9 @@
 </div>
 
 <style>
-	:root {
-		--grid-padding__top: 3.5rem;
-		--grid-column__header: 14vh;
-		--grid-row-gap: 1rem;
-		--grid-column-gap: 1rem;
-
-		--border-radius: 3rem;
-	}
-
 	.grid-container {
 		height: 100%;
-		padding: var(--grid-padding__top) 2.5rem;
+		padding: var(--grid-padding__top) var(--grid-padding__left);
 
 		display: grid;
 		column-gap: var(--grid-column-gap);

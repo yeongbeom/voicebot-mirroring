@@ -2,7 +2,6 @@
 	import { onDestroy } from 'svelte';
 
 	import { startSocket, endSocket } from '$root/lib/edgeServer';
-	import { debugMode } from '$root/stores/config';
 
 	import { connection, yeelight } from '$root/stores/socket';
 
@@ -10,6 +9,9 @@
 
 	export let volume: number | null = null;
 	export let ready = '';
+	export let debugMode = 'off';
+
+	let error: string | null = null;
 
 	const handleClick = (event) => {
 		const message = event.target.innerText.split(':');
@@ -32,6 +34,10 @@
 
 	socket.on('yeelight', (message) => {
 		$connection.yeelight = message;
+	});
+
+	socket.on('media', (pError) => {
+		error = pError.path;
 	});
 
 	socket.on('setVolume', (message) => {
@@ -70,7 +76,11 @@
 	});
 </script>
 
-{#if $debugMode === 'on'}
+{#if error}
+	No such file or directory: {error}
+{/if}
+
+{#if debugMode === 'on'}
 	{#if ready === 'main'}
 		<div>스마트조명 연결 중</div>
 	{:else if ready === 'none'}

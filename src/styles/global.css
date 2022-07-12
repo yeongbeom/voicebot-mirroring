@@ -40,6 +40,14 @@
 	--color-border-secondary: hsl(0, 0%, 34%);
 
 	--radius-base: 2.4rem;
+
+	--grid-row-gap: 1rem;
+	--grid-column-gap: 1rem;
+
+	--grid-padding__top: 4.2rem;
+	--grid-padding__left: 3.2em;
+	--grid-column__header: 14vh;
+	--border-radius: 4.6rem;
 }
 
 ::-webkit-scrollbar {
