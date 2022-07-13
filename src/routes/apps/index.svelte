@@ -103,6 +103,8 @@
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background-color: var(--color-bg-primary);
 	}
 
 	.content__left {
@@ -114,6 +116,9 @@
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background: linear-gradient(to bottom, #e9edc9 0%, #d2dbb4 100%);
+		opacity: 0.7;
 	}
 
 	.content__rightup {
@@ -121,14 +126,17 @@
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 
-		background: linear-gradient(to bottom, #b7eaff 0%, #94dfff 100%);
-		opacity: 0.8;
+		background: linear-gradient(to bottom, #bee9fdb3 0%, #9de2ffad 100%);
+		opacity: 0.7;
 	}
 
 	.content__rightdown {
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background: linear-gradient(to bottom, #f4e1b1b7 0%, #f3c496d2 100%);
+		opacity: 0.7;
 	}
 
 	.modal {

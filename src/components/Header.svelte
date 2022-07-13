@@ -11,7 +11,7 @@
 
 	export let user: any;
 	export let focus = false;
-	export let active = false;
+	export let highlight = false;
 	export let mobile: string | undefined = '';
 
 	const dispatch = createEventDispatcher();
@@ -20,11 +20,13 @@
 		mobile;
 
 		if (mobile) {
-			if (mobile.length < 7) active = false;
-			else if (mobile.length >= 7 && mobile.length <= 8) active = true;
+			if (mobile.length < 7) highlight = false;
+			else if (mobile.length >= 7 && mobile.length <= 8) highlight = true;
 
 			if (mobile.length === 8) focus = false;
 			else if (mobile.length > 8) mobile = mobile.substring(0, 8);
+		} else {
+			highlight = false;
 		}
 	}
 
@@ -85,7 +87,7 @@
 
 	{#if !user}
 		<span>
-			<Button {active} type="submit" form="user">로그인</Button>
+			<Button bind:highlight disabled={true} type="submit" form="user">로그인</Button>
 		</span>
 	{:else}
 		<span in:fade>
@@ -113,7 +115,7 @@
 	}
 
 	form.focus {
-		border: 3px solid var(--color-green);
+		border: 3px solid var(--color-text-highlight);
 	}
 
 	form.disabled {

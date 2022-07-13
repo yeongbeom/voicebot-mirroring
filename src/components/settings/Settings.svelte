@@ -88,7 +88,7 @@
 
 		height: 100%;
 
-		overflow: scroll;
+		overflow: auto;
 	}
 
 	.disabled {

@@ -115,8 +115,6 @@
 	}
 
 	.icon {
-		height: 100%;
-		margin-top: 28px;
 		text-align: center;
 	}
 
