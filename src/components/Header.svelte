@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { fade } from 'svelte/transition';
 	import { createEventDispatcher } from 'svelte';
 	import { enhance } from '$root/actions/form';
 
@@ -10,7 +11,7 @@
 
 	export let user: any;
 	export let focus = false;
-	export let active = false;
+	export let highlight = false;
 	export let mobile: string | undefined = '';
 
 	const dispatch = createEventDispatcher();
@@ -19,11 +20,13 @@
 		mobile;
 
 		if (mobile) {
-			if (mobile.length < 7) active = false;
-			else if (mobile.length >= 7 && mobile.length <= 8) active = true;
+			if (mobile.length < 7) highlight = false;
+			else if (mobile.length >= 7 && mobile.length <= 8) highlight = true;
 
 			if (mobile.length === 8) focus = false;
 			else if (mobile.length > 8) mobile = mobile.substring(0, 8);
+		} else {
+			highlight = false;
 		}
 	}
 
@@ -53,14 +56,16 @@
 			}
 		}}
 	>
-		<span class:user>
+		<span>
 			{#if user}
-				{#if mobile?.length === 7}
-					비상연락망 010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
-				{:else if mobile?.length === 8}
-					비상연락망 010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
-				{/if}
-			{:else}전화번호 010
+				<span class:user in:fade>
+					{#if mobile?.length === 7}
+						비상연락망 010 {mobile.slice(0, 3)} {mobile.slice(3, 8)}
+					{:else if mobile?.length === 8}
+						비상연락망 010 {mobile.slice(0, 4)} {mobile.slice(4, 9)}
+					{/if}
+				</span>
+			{:else}휴대폰 010
 				<input
 					type="text"
 					name="mobile"
@@ -82,10 +87,10 @@
 
 	{#if !user}
 		<span>
-			<Button {active} type="submit" form="user">로그인</Button>
+			<Button bind:highlight disabled={true} type="submit" form="user">로그인</Button>
 		</span>
 	{:else}
-		<span>
+		<span in:fade>
 			<a href="/auth/logout"><LogoutSvg /></a>
 		</span>
 	{/if}
@@ -110,7 +115,7 @@
 	}
 
 	form.focus {
-		border: 3px solid var(--color-green);
+		border: 3px solid var(--color-text-highlight);
 	}
 
 	form.disabled {

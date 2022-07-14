@@ -1,11 +1,11 @@
 export const characterOptions = [
 	{
 		value: 'male_kitty',
-		label: '고양이1'
+		label: '귀염냥이'
 	},
 	{
 		value: 'female_kitty',
-		label: '고양이2'
+		label: '이쁨냥이'
 	},
 	{
 		value: 'sample',

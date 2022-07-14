@@ -42,8 +42,8 @@
 		grid-template-columns: repeat(3, 33%);
 		grid-template-rows: repeat(4, 24.625%);
 
-		padding: 1rem;
-		background-color: rgba(0, 0, 0, 0.01);
+		padding: 0.4rem;
+		background-color: rgba(0, 0, 0, 0.05);
 		border-radius: 8px;
 	}
 

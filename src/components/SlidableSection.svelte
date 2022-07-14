@@ -6,11 +6,37 @@
 	export let height = '100vh';
 	let sign: number;
 
+	export let pressUrl: string | null = null;
 	export let leftUrl: string | null = null;
 	export let rightUrl: string | null = null;
 
 	const handler = (event: any) => {
 		const direction = event.detail.direction;
+
+		const selection = event.detail.target.id;
+		if (
+			[
+				'auto',
+				'upset',
+				'happy',
+				'depressed',
+				'tired',
+				'annoyed',
+				'bonfire',
+				'rain',
+				'meditation'
+			].includes(selection)
+		) {
+			if (!direction) goto(`/apps/therapy/${selection}`);
+		}
+
+		const exception = event.detail.target.classList;
+		if (exception.contains('carousel-item')) return;
+		else if (exception.contains('therapy-container')) return;
+		else if (exception.contains('sc-carousel__arrow-container')) return;
+		else if (exception.contains('sc-carousel-arrow__arrow')) return;
+		else if (exception.contains('sc-carousel-button')) return;
+		else if (exception.contains('sc-carousel__carousel-container')) return;
 
 		if (direction === 'left' && leftUrl !== null) {
 			sign = -1;
@@ -21,7 +47,9 @@
 		}
 
 		if (direction === undefined) {
-			if (leftUrl !== null && rightUrl === null) {
+			if (pressUrl) {
+				goto(pressUrl);
+			} else if (leftUrl !== null && rightUrl === null) {
 				sign = -1;
 				goto(leftUrl);
 			} else if (leftUrl === null && rightUrl !== null) {
@@ -30,7 +58,7 @@
 			}
 		}
 
-		console.log(`direction: ${direction}`);
+		console.debug(`direction: ${direction}`);
 	};
 </script>
 

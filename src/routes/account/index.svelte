@@ -27,7 +27,7 @@
 	export let mobile: string;
 </script>
 
-<div class="grid-container">
+<div class="section-container">
 	<div class="header">
 		<a href="/apps"><BackSvg /></a>
 		<span style={'font-size: 32px'}> 설정 </span>
@@ -47,7 +47,7 @@
 </div>
 
 <style>
-	.grid-container {
+	.section-container {
 		height: 100%;
 		padding: var(--grid-padding__top) var(--grid-padding__left);
 
@@ -68,6 +68,8 @@
 		grid-template-columns: repeat(3, 1fr);
 		justify-items: center;
 		align-items: center;
+
+		background-color: var(--color-bg-primary);
 	}
 
 	.content {
@@ -76,5 +78,7 @@
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
 
 		padding: var(--spacing-32);
+
+		background-color: var(--color-bg-primary);
 	}
 </style>

@@ -12,7 +12,7 @@
 
 <SocketManager bind:ready />
 
-<SlidableSection rightUrl="/apps">
+<SlidableSection pressUrl="/apps">
 	{#if ready !== 'both'}
 		<div class="load" out:fade>
 			<img src="/loading.gif" alt="" />

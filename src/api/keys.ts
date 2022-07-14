@@ -10,3 +10,5 @@ export const ttsApiKey: TtsApiKeyType = {
 	4: import.meta.env.VITE_TTS_API_KEY_4,
 	5: import.meta.env.VITE_TTS_API_KEY_5
 };
+
+export const weatherApiKey = import.meta.env.VITE_WEATHER_API_KEY;

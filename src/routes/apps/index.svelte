@@ -24,13 +24,13 @@
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 
 	import Header from '$root/components/Header.svelte';
+	import Therapy from '$root/components/Therapy.svelte';
 	import Weather from '$root/components/Weather.svelte';
+	import Alarm from '$root/components/alarm/Alarm.svelte';
 
 	let mobile: string | undefined;
 
 	let focus = false;
-
-	let therapyMode = 'sample';
 
 	let error = '';
 	// let success = '';
@@ -68,11 +68,10 @@
 			/>
 		</div>
 		<div class="content__left">
-			<input type="text" bind:value={therapyMode} />
-			<a href="/apps/therapy/{therapyMode}">테라피</a>
+			<Therapy />
 		</div>
 		<div class="content__rightup"><Weather /></div>
-		<div class="content__rightdown">알람</div>
+		<div class="content__rightdown"><Alarm /></div>
 	</div>
 	{#if focus}
 		<div class="modal">
@@ -105,6 +104,8 @@
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background-color: var(--color-bg-primary);
 	}
 
 	.content__left {
@@ -116,18 +117,27 @@
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background: linear-gradient(to bottom, #e9edc9 0%, #d2dbb4 100%);
+		opacity: 0.7;
 	}
 
 	.content__rightup {
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background: linear-gradient(to bottom, #bee9fdb3 0%, #9de2ffad 100%);
+		opacity: 0.7;
 	}
 
 	.content__rightdown {
 		border: 3px solid darkgray;
 		border-radius: var(--border-radius);
 		box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+		background: linear-gradient(to bottom, #f4e1b1b7 0%, #f3c496d2 100%);
+		opacity: 0.7;
 	}
 
 	.modal {

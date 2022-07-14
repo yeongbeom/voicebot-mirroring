@@ -1,10 +1,16 @@
 <script lang="ts">
-	export let type: string | null;
-	export let form: string | null;
-	export let active: boolean;
+	export let type: string | null = null;
+	export let form: string | null = null;
+	export let highlight: boolean | null = null;
+	export let disabled = false;
+
+	$: {
+		if (highlight === true) disabled = false;
+		else if (highlight === false) disabled = true;
+	}
 </script>
 
-<button class:active {type} {form}><slot /></button>
+<button class:highlight {disabled} {type} {form}><slot /></button>
 
 <style>
 	button {
@@ -38,9 +44,9 @@
 		height: 48px;
 	}
 
-	button.active {
+	button.highlight {
 		color: #222222;
-		border: 3px solid var(--color-green);
+		border: 3px solid var(--color-text-highlight);
 	}
 
 	button:focus-visible {
@@ -48,7 +54,7 @@
 		transition: box-shadow 0.2s;
 	}
 
-	button:active {
+	button:active :not(disabled) {
 		background-color: #f7f7f7;
 		border-color: #000000;
 		transform: scale(0.96);
