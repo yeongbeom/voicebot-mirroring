@@ -26,6 +26,7 @@
 	import Header from '$root/components/Header.svelte';
 	import Therapy from '$root/components/Therapy.svelte';
 	import Weather from '$root/components/Weather.svelte';
+	import Alarm from '$root/components/alarm/Alarm.svelte';
 
 	let mobile: string | undefined;
 
@@ -70,7 +71,7 @@
 			<Therapy />
 		</div>
 		<div class="content__rightup"><Weather /></div>
-		<div class="content__rightdown">알람</div>
+		<div class="content__rightdown"><Alarm /></div>
 	</div>
 	{#if focus}
 		<div class="modal">

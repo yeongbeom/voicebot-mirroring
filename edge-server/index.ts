@@ -23,17 +23,19 @@ app.get('/:mode', (req: Request, res: Response) => {
 	const mode = req.params.mode;
 
 	if (yeelight) {
-		const cfTest = [
+		const cfAuto = [
 			// duration (ms), mode, rgb, brightness
-			[100, 1, toRgbValue(255, 0, 0), 100],
-			[900, 7, toRgbValue(255, 255, 255), 100],
-			[100, 1, toRgbValue(0, 255, 0), 100],
-			[900, 7, toRgbValue(255, 255, 255), 100],
-			[100, 1, toRgbValue(0, 0, 255), 100],
-			[900, 7, toRgbValue(255, 255, 255), 100]
-		];
+			[1900, 1, toRgbValue(190, 20, 20), 80],
+			[4750, 1, toRgbValue(0, 180, 200), 80],
+			[3800, 1, toRgbValue(255, 130, 100), 80],
+			[3800, 1, toRgbValue(120, 255, 0), 80],
 
-		const cfFire = [
+			[3800, 1, toRgbValue(200, 10, 10), 80],
+			[2850, 1, toRgbValue(200, 180, 0), 80],
+			[3800, 1, toRgbValue(30, 30, 100), 80],
+			[5700, 1, toRgbValue(120, 255, 0), 80]
+		];
+		const cfBonfire = [
 			[1800, 1, toRgbValue(255, 150, 240), 80],
 			[960, 1, toRgbValue(255, 150, 200), 30],
 			[1500, 1, toRgbValue(255, 150, 240), 70],
@@ -43,8 +45,7 @@ app.get('/:mode', (req: Request, res: Response) => {
 			[1500, 1, toRgbValue(255, 150, 240), 50],
 			[900, 1, toRgbValue(255, 150, 180), 90]
 		];
-
-		const cfAnger = [
+		const cfUpset = [
 			[10000, 1, toRgbValue(255, 150, 180), 80],
 			[8000, 1, toRgbValue(120, 255, 0), 80],
 			[18000, 1, toRgbValue(0, 100, 0), 80],
@@ -54,7 +55,6 @@ app.get('/:mode', (req: Request, res: Response) => {
 			[18000, 1, toRgbValue(0, 100, 0), 80],
 			[6000, 1, toRgbValue(255, 130, 100), 80]
 		];
-
 		const cfHappy = [
 			[1300, 1, toRgbValue(190, 20, 20), 80],
 			[1700, 1, toRgbValue(200, 180, 0), 80],
@@ -65,8 +65,7 @@ app.get('/:mode', (req: Request, res: Response) => {
 			[1500, 1, toRgbValue(255, 130, 100), 80],
 			[1900, 1, toRgbValue(120, 255, 0), 80]
 		];
-
-		const cfSad = [
+		const cfDepressed = [
 			[2300, 1, toRgbValue(200, 180, 0), 80],
 			[2800, 1, toRgbValue(255, 150, 240), 80],
 			[2500, 1, toRgbValue(30, 30, 120), 80],
@@ -76,8 +75,7 @@ app.get('/:mode', (req: Request, res: Response) => {
 			[2300, 1, toRgbValue(30, 30, 120), 80],
 			[2800, 1, toRgbValue(120, 205, 50), 80]
 		];
-
-		const cfVigor = [
+		const cfRain = [
 			[10000, 1, toRgbValue(70, 70, 230), 80],
 			[8000, 1, toRgbValue(80, 80, 230), 80],
 			[7000, 1, toRgbValue(60, 60, 230), 80],
@@ -86,8 +84,7 @@ app.get('/:mode', (req: Request, res: Response) => {
 			[9000, 1, toRgbValue(70, 60, 230), 80],
 			[10000, 1, toRgbValue(50, 70, 230), 80]
 		];
-
-		const cfMed = [
+		const cfMeditation = [
 			[8300, 1, toRgbValue(200, 100, 150), 80],
 			[6300, 1, toRgbValue(120, 205, 30), 80],
 			[5300, 1, toRgbValue(160, 30, 30), 80],
@@ -97,29 +94,56 @@ app.get('/:mode', (req: Request, res: Response) => {
 			[6300, 1, toRgbValue(160, 30, 30), 80],
 			[10300, 1, toRgbValue(200, 180, 0), 80]
 		];
+		const cfTired = [
+			[8100, 1, toRgbValue(0, 180, 0), 80],
+			[7100, 1, toRgbValue(150, 40, 40), 80],
+			[5100, 1, toRgbValue(250, 250, 0), 80],
+			[9100, 1, toRgbValue(40, 40, 160), 80],
+			[5100, 1, toRgbValue(0, 180, 0), 80],
+			[6100, 1, toRgbValue(160, 40, 40), 80],
+			[8100, 1, toRgbValue(250, 250, 0), 80],
+			[6100, 1, toRgbValue(40, 40, 160), 80]
+		];
+
+		const cfAnnoyed = [
+			[6100, 1, toRgbValue(74, 0, 100), 80],
+			[8100, 1, toRgbValue(160, 20, 20), 80],
+			[10100, 1, toRgbValue(40, 40, 150), 80],
+			[13100, 1, toRgbValue(200, 140, 50), 80],
+			[10100, 1, toRgbValue(74, 0, 100), 80],
+			[8100, 1, toRgbValue(160, 20, 20), 80],
+			[9100, 1, toRgbValue(40, 40, 150), 80],
+			[7100, 1, toRgbValue(200, 140, 50), 80]
+		];
 
 		yeelight.set_power('on');
 		switch (mode) {
-			case 'sample':
-				yeelight.start_cf(0, 2, cfTest);
+			case 'auto':
+				yeelight.start_cf(0, 2, cfAuto);
 				break;
-			case 'sample1':
-				yeelight.start_cf(0, 2, cfAnger);
+			case 'upset':
+				yeelight.start_cf(0, 2, cfUpset);
 				break;
-			case 'sample2':
-				yeelight.start_cf(0, 2, cfFire);
+			case 'bonfire':
+				yeelight.start_cf(0, 2, cfBonfire);
 				break;
-			case 'sample3':
+			case 'happy':
 				yeelight.start_cf(0, 2, cfHappy);
 				break;
-			case 'sample4':
-				yeelight.start_cf(0, 2, cfMed);
+			case 'meditation':
+				yeelight.start_cf(0, 2, cfMeditation);
 				break;
-			case 'sample5':
-				yeelight.start_cf(0, 2, cfSad);
+			case 'depressed':
+				yeelight.start_cf(0, 2, cfDepressed);
 				break;
-			case 'sample6':
-				yeelight.start_cf(0, 2, cfVigor);
+			case 'rain':
+				yeelight.start_cf(0, 2, cfRain);
+				break;
+			case 'annoyed':
+				yeelight.start_cf(0, 2, cfAnnoyed);
+				break;
+			case 'tired':
+				yeelight.start_cf(0, 2, cfTired);
 				break;
 			default:
 				yeelight.set_power('off');
@@ -201,7 +225,6 @@ poll(() => {
 
 	smartLight.bind((light: any) => {
 		yeelight = light;
-		yeelight.set_power('on');
 		console.debug('Yeelight has been connected');
 
 		if (socket) {
@@ -248,7 +271,7 @@ io.on('connection', (pSocket) => {
 
 	socket.on('startYeelight', async () => {
 		yeelight.set_power('on');
-		// yeelight.set_rgb(color);
+		// yeelight.set_rgb([255,0,0]);
 		yeelight.get_prop('bright').then((data: any) => console.debug(data));
 		// yeelight.set_power('off');
 	});

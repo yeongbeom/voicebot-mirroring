@@ -26,7 +26,7 @@
 			<div id="upset" class="carousel-item">흥분</div>
 			<div id="happy" class="carousel-item">기쁨</div>
 			<div id="depressed" class="carousel-item">우울</div>
-			<div id="tired" class="carousel-item">지침</div>
+			<div id="tired" class="carousel-item">피로</div>
 			<div id="annoyed" class="carousel-item">짜증</div>
 
 			<div id="bonfire" class="carousel-item">모닥불</div>

@@ -58,7 +58,7 @@
 			}
 		}
 
-		console.log(`direction: ${direction}`);
+		console.debug(`direction: ${direction}`);
 	};
 </script>
 
