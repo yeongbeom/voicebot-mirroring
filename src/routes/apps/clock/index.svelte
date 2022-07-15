@@ -1,21 +1,13 @@
 <script lang="ts">
 	import SlidableSection from '$root/components/SlidableSection.svelte';
-	import { onDestroy } from 'svelte';
 
-	let current = new Date();
-
-	const interval = setInterval(() => {
-		current = new Date();
-	}, 1000);
-
-	onDestroy(() => {
-		clearInterval(interval);
-	});
+	import { currentTime } from '$root/stores/apps';
 </script>
 
 <SlidableSection rightUrl="/apps">
 	<div>
-		{current.toLocaleTimeString()}
+		{$currentTime.slice(0, 6)}
+		{$currentTime.slice(10, 13)}
 	</div>
 </SlidableSection>
 
@@ -24,7 +16,7 @@
 		background-color: black;
 		height: 100%;
 		color: white;
-		font-size: var(--font-80);
+		font-size: 80px;
 
 		display: flex;
 		align-items: center;

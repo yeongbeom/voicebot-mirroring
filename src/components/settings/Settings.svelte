@@ -13,7 +13,7 @@
 	let developer = false;
 	let age: boolean;
 	let sex: string;
-	let volume = 50; // [TODO]: get volume info from edge server
+	let volume = 150; // [TODO]: get volume info from edge server
 	let ready: string;
 
 	const handleVolumeChange = (event: CustomEvent) => {
