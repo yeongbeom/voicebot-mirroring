@@ -54,9 +54,9 @@
 	<span class:disabled={ready === 'none'}>볼륨</span>
 	<Slider disabled={ready === 'none'} on:change={handleVolumeChange} {volume} />
 
-	<span class:disabled={ready !== 'both'}>스마트조명</span>
+	<span class:disabled={ready === 'none'}>스마트조명</span>
 	<Radio
-		disabled={ready !== 'both'}
+		disabled={ready === 'none'}
 		options={lightOptions}
 		fontSize={16}
 		flexDirection={'row'}

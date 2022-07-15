@@ -15,7 +15,7 @@ export const fetchTtsData = async (speechText: string): Promise<ArrayBuffer> => 
 		'Content-Type': 'application/xml',
 		Authorization: `KakaoAK ${ttsApiKey[keyNo]}`
 	};
-	const synth_in = `<speak> <voice name='WOMAN_DIALOG_BRIGHT'> ${speechText} </voice> </speak>`;
+	const synth_in = `<speak> <voice name='WOMAN_DIALOG_BRIGHT'> <prosody volume='loud' rate='slow'> ${speechText} </prosody> </voice> </speak>`;
 	const res = await fetch(endpoints.tts, {
 		method: 'POST',
 		headers: headers_synth,
