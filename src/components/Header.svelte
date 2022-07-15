@@ -130,6 +130,7 @@
 		text-align: center;
 		letter-spacing: 0.2rem;
 		font-family: var(--font-serif);
+		background-color: inherit;
 
 		border: none;
 	}

@@ -16,8 +16,8 @@
 		{disabled}
 		on:change={handleVolume}
 		type="range"
-		min="1"
-		max="100"
+		min="0"
+		max="150"
 		bind:value={volume}
 		class="slider"
 		id="volume"

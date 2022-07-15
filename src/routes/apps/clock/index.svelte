@@ -1,11 +1,16 @@
 <script lang="ts">
 	import SlidableSection from '$root/components/SlidableSection.svelte';
+	import { onDestroy } from 'svelte';
 
 	let current = new Date();
 
-	setInterval(() => {
+	const interval = setInterval(() => {
 		current = new Date();
 	}, 1000);
+
+	onDestroy(() => {
+		clearInterval(interval);
+	});
 </script>
 
 <SlidableSection rightUrl="/apps">

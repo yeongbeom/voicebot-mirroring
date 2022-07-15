@@ -22,11 +22,12 @@
 		}
 
 		weather = await res.json();
-		console.debug(weather);
 
-		location = translate(weather.name);
+		location = translate(weather.name) ? translate(weather.name) : weather.name;
 		temp = Math.round(weather.main.temp - 273.1);
-		description = translate(weather.weather[0].main);
+		description = translate(weather.weather[0].main)
+			? translate(weather.weather[0].main)
+			: weather.weather[0].main;
 		humidity = weather.main.humidity;
 		speed = Math.round((weather.wind.speed * 10) / 10);
 	};

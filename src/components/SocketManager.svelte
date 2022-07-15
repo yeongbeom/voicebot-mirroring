@@ -64,7 +64,7 @@
 
 		if (volume) {
 			if (volume < 10) volume = 0;
-			socket.emit('volumeChange', { interface: 'Master', volume });
+			socket.emit('volumeChange', { interface: 1, volume });
 		}
 	}
 
