@@ -7,7 +7,7 @@
 <SlidableSection rightUrl="/apps">
 	<div>
 		{$currentTime.slice(0, 6)}
-		{$currentTime.slice(10, 13)}
+		{$currentTime.slice(10, 14)}
 	</div>
 </SlidableSection>
 
