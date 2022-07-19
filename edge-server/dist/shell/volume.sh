@@ -1,2 +1,2 @@
 # amixer sset \"$1\" $2%
-set-sink-volume $1 $2%
+pactl set-sink-volume $1 $2%

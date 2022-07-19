@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { character, debugMode, webrtcStream, monitoring } from '$root/stores/config';
-	import { yeelight } from '$root/stores/socket';
+	import { socketStatus, yeelight } from '$root/stores/socket';
 
 	import SocketManager from '$root/components/SocketManager.svelte';
 
@@ -13,15 +13,23 @@
 	let developer = false;
 	let age: boolean;
 	let sex: string;
-	let volume = 150; // [TODO]: get volume info from edge server
-	let ready: string;
+	let volume: number | null = null; // [TODO]: get volume info from edge server
+	let power: string;
 
 	const handleVolumeChange = (event: CustomEvent) => {
 		volume = event.detail;
 	};
+
+	const handleShutdown = () => {
+		power = 'shutdown';
+	};
+
+	const handleReboot = () => {
+		power = 'reboot';
+	};
 </script>
 
-<SocketManager bind:ready bind:volume />
+<SocketManager bind:volume {power} condition="ok" addtionalCondition="partial" />
 
 <div class="grid-container">
 	<span>캐릭터</span>
@@ -51,12 +59,12 @@
 		bind:userSelected={age}
 	/>
 
-	<span class:disabled={ready === 'none'}>볼륨</span>
-	<Slider disabled={ready === 'none'} on:change={handleVolumeChange} {volume} />
+	<span class:disabled={$socketStatus === 'none'}>볼륨</span>
+	<Slider disabled={$socketStatus === 'none'} on:change={handleVolumeChange} {volume} />
 
-	<span class:disabled={ready === 'none'}>스마트조명</span>
+	<span class:disabled={$socketStatus === 'none'}>스마트조명</span>
 	<Radio
-		disabled={ready === 'none'}
+		disabled={$socketStatus === 'none'}
 		options={lightOptions}
 		fontSize={16}
 		flexDirection={'row'}
@@ -66,6 +74,12 @@
 
 	<span>와이파이</span>
 	<span>정상 연결 상태</span>
+
+	<span>전원제어</span>
+	<span>
+		<button on:click={handleShutdown}>전원끄기</button>
+		<button on:click={handleReboot}>재시작</button>
+	</span>
 
 	<span>버전</span>
 	<span on:click={() => (developer = !developer)}> 최신 버전</span>
@@ -93,5 +107,10 @@
 
 	.disabled {
 		color: lightgray;
+	}
+
+	button {
+		width: 120px;
+		margin: auto 24px;
 	}
 </style>

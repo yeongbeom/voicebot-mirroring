@@ -10,9 +10,6 @@ type Enhance = (form: HTMLFormElement, { result }?: Parameters) => Destroy;
 export const enhance: Enhance = (form, { result } = {}) => {
 	let invalidatePath: URL;
 
-	const pageTurnAudio = new Audio('/page-turn.mp3');
-	pageTurnAudio.play();
-
 	page.subscribe((path) => {
 		invalidatePath = path.url;
 	});

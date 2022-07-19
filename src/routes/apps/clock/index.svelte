@@ -6,8 +6,8 @@
 
 <SlidableSection rightUrl="/apps">
 	<div>
-		{$currentTime.slice(0, 6)}
-		{$currentTime.slice(10, 14)}
+		{$currentTime}
+		<!-- {$currentTime.slice(11, 14)} -->
 	</div>
 </SlidableSection>
 
@@ -16,7 +16,7 @@
 		background-color: black;
 		height: 100%;
 		color: white;
-		font-size: 80px;
+		font-size: 64px;
 
 		display: flex;
 		align-items: center;

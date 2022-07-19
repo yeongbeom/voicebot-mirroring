@@ -247,7 +247,8 @@ io.on('connection', (pSocket) => {
 	console.debug(`Socket connected (${client})`);
 
 	socket.emit('main', { success: 'Main socket connected', client });
-	if (socket) {
+
+	if (yeelight) {
 		console.debug('Send Yeelight socket connection event');
 		socket.emit('yeelight', { success: 'YeeLight connected', yeelight });
 	}
@@ -269,6 +270,24 @@ io.on('connection', (pSocket) => {
 		socket!.emit('setVolume', { success: stdout });
 	});
 
+	socket.on('shutdown', async (command) => {
+		const { stdout, stderr } = await execPromise(`${command.interface} now`);
+		if (stderr) {
+			console.error(`stderr: ${stderr}`);
+			return;
+		}
+		console.debug(`stdout: ${stdout}`);
+	});
+
+	socket.on('reboot', async (command) => {
+		const { stdout, stderr } = await execPromise(`${command.interface} now`);
+		if (stderr) {
+			console.error(`stderr: ${stderr}`);
+			return;
+		}
+		console.debug(`stdout: ${stdout}`);
+	});
+
 	socket.on('startYeelight', async () => {
 		yeelight.set_power('on');
 		// yeelight.set_rgb([255,0,0]);
@@ -285,8 +304,12 @@ io.on('connection', (pSocket) => {
 	});
 
 	socket.on('endYeelight', () => {
-		yeelight.get_prop('bright').then((data: any) => console.debug(data));
-		yeelight.set_power('off');
+		try {
+			yeelight.get_prop('bright').then((data: any) => console.debug(data));
+			yeelight.set_power('off');
+		} catch {
+			console.error('Cannot end Yeelight');
+		}
 		// setTimeout(() => {
 		// 	yeelight.closeConnection();
 		// }, 1000);
