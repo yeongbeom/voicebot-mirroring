@@ -36,10 +36,10 @@ export const ageOptions = [
 export const lightOptions = [
 	{
 		value: 'on',
-		label: '켜기'
+		label: '사용'
 	},
 	{
 		value: 'off',
-		label: '끄기'
+		label: '미사용'
 	}
 ];

@@ -27,7 +27,12 @@
 				'meditation'
 			].includes(selection)
 		) {
-			if (!direction) goto(`/apps/therapy/${selection}`);
+			if (!direction) {
+				const clickAudio = new Audio('/click.mp3');
+				clickAudio.play();
+
+				goto(`/apps/therapy/${selection}`);
+			}
 		}
 
 		const exception = event.detail.target.classList;
@@ -39,20 +44,35 @@
 		else if (exception.contains('sc-carousel__carousel-container')) return;
 
 		if (direction === 'left' && leftUrl !== null) {
+			const swipeAudio = new Audio('/swipe.mp3');
+			swipeAudio.play();
+
 			sign = -1;
 			goto(leftUrl);
 		} else if (direction === 'right' && rightUrl !== null) {
+			const swipeAudio = new Audio('/swipe.mp3');
+			swipeAudio.play();
+
 			sign = 1;
 			goto(rightUrl);
 		}
 
 		if (direction === undefined) {
 			if (pressUrl) {
+				const clickAudio = new Audio('/click.mp3');
+				clickAudio.play();
+
 				goto(pressUrl);
 			} else if (leftUrl !== null && rightUrl === null) {
+				const swipeAudio = new Audio('/swipe.mp3');
+				swipeAudio.play();
+
 				sign = -1;
 				goto(leftUrl);
 			} else if (leftUrl === null && rightUrl !== null) {
+				const swipeAudio = new Audio('/swipe.mp3');
+				swipeAudio.play();
+
 				sign = 1;
 				goto(rightUrl);
 			}

@@ -1,16 +1,13 @@
 <script lang="ts">
 	import SlidableSection from '$root/components/SlidableSection.svelte';
 
-	let current = new Date();
-
-	setInterval(() => {
-		current = new Date();
-	}, 1000);
+	import { currentTime } from '$root/stores/apps';
 </script>
 
 <SlidableSection rightUrl="/apps">
 	<div>
-		{current.toLocaleTimeString()}
+		{$currentTime}
+		<!-- {$currentTime.slice(11, 14)} -->
 	</div>
 </SlidableSection>
 
@@ -19,7 +16,7 @@
 		background-color: black;
 		height: 100%;
 		color: white;
-		font-size: var(--font-80);
+		font-size: 64px;
 
 		display: flex;
 		align-items: center;

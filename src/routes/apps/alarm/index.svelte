@@ -25,7 +25,6 @@
 	import { alarm, currentTime } from '$root/stores/apps';
 
 	import Counter from '$root/components/shared/Counter.svelte';
-	import WatchTime from '$root/components/alarm/WatchTime.svelte';
 	import BackSvg from '$root/components/shared/BackSvg.svelte';
 	import Radio from '$root/components/shared/Radio.svelte';
 
@@ -51,8 +50,6 @@
 		console.debug('/apps/alarm/index.svelte destroyed');
 	});
 </script>
-
-<WatchTime />
 
 <div class="section-container">
 	<div class="header">

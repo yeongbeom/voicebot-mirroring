@@ -21,6 +21,15 @@
   - Screen resolution of 800 x 480 pixels
   - Auto-hide taskbar
   - Right-click on the taskbar and select "Panel Settings". Click on the "Advanced" tab, and check "Minimize panel when not in use".
+  - Set local
+  - Disable swipe to go back in chrome
+
+    ```bash
+    chrome://flags/#overscroll-history-navigation
+    ```
+
+    Open the dropdown under the ‘Overscroll history navigation ‘ flag, and select ‘Disable’ from the options. Relaunch Chrome.
+
   - Install Korean language
 
     ```bash
