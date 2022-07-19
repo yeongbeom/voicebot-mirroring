@@ -26,7 +26,7 @@
 			serverConnection = '';
 			yeelightConnection = '';
 			$socketStatus = 'none';
-			error = 'Socket is not connected';
+			error = 'Edge server might be dead';
 			console.debug(error);
 		}
 	}, 1000);

@@ -270,8 +270,8 @@ io.on('connection', (pSocket) => {
 		socket!.emit('setVolume', { success: stdout });
 	});
 
-	socket.on('shutdown', async (command) => {
-		const { stdout, stderr } = await execPromise(`${command.interface} now`);
+	socket.on('shutdown', async () => {
+		const { stdout, stderr } = await execPromise(`sudo shutdown now`);
 		if (stderr) {
 			console.error(`stderr: ${stderr}`);
 			return;
@@ -279,8 +279,8 @@ io.on('connection', (pSocket) => {
 		console.debug(`stdout: ${stdout}`);
 	});
 
-	socket.on('reboot', async (command) => {
-		const { stdout, stderr } = await execPromise(`${command.interface} now`);
+	socket.on('reboot', async () => {
+		const { stdout, stderr } = await execPromise(`sudo reboot now`);
 		if (stderr) {
 			console.error(`stderr: ${stderr}`);
 			return;
