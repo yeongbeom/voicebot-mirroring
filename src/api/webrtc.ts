@@ -52,7 +52,9 @@ const webrtcStart = (offerEndpoint, webrtcParams, domElem, userId) => {
 		let videoResolution = webrtcParams['video-resolution'].split('x');
 		constraints.video = {
 			width: parseInt(videoResolution[0], 0),
-			height: parseInt(videoResolution[1], 0)
+			height: parseInt(videoResolution[1], 0),
+
+			frameRate: { ideal: 1 }
 		};
 	}
 

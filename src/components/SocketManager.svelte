@@ -10,22 +10,19 @@
 
 	let serverConnection = '';
 	let yeelightConnection = '';
-	let initialValue = 'none';
 
 	export let debugMode = 'off';
 	export let volume: number | null = null;
 	export let power = 'on';
 
-	export let condition = initialValue;
-	export let addtionalCondition = initialValue;
+	export let condition1 = '';
+	export let condition2 = '';
+	export let condition3 = '';
 
 	export let error = '';
 
 	setTimeout(() => {
 		if (!socket.connected) {
-			serverConnection = '';
-			yeelightConnection = '';
-			$socketStatus = 'none';
 			error = 'Edge server might be dead';
 			console.debug(error);
 		}
@@ -80,12 +77,15 @@
 		$yeelight;
 		serverConnection;
 		yeelightConnection;
+		socket.connected;
 
-		if (serverConnection && ($yeelight === 'off' || yeelightConnection)) {
-			$socketStatus = 'ok';
-		} else if (serverConnection) {
-			$socketStatus = 'partial';
-		} else {
+		if (socket.connected) {
+			if (serverConnection && ($yeelight === 'off' || yeelightConnection)) {
+				$socketStatus = 'ok';
+			} else {
+				$socketStatus = 'partial';
+			}
+		} else if ($socketStatus !== 'init') {
 			$socketStatus = 'none';
 		}
 	}
@@ -119,14 +119,16 @@
 	});
 </script>
 
-{#if $socketStatus !== condition && $socketStatus !== addtionalCondition}
+{#if $socketStatus === condition1 || $socketStatus === condition2 || $socketStatus === condition3}
 	<div class="load" out:fade>
 		{#if error}
 			{error}
 			<a href="/apps">뒤로가기</a>
 		{/if}
 		<img src="/loading.gif" alt="" />
-		{#if $socketStatus === 'none'}
+		{#if $socketStatus === 'init'}
+			<span>디바이스가 없습니다</span>
+		{:else if $socketStatus === 'none'}
 			<span>로딩 중...</span>
 		{:else}
 			<span>스마트조명 연결 중...</span>

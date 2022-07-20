@@ -20,6 +20,8 @@
 </script>
 
 <script lang="ts">
+	import { socketStatus } from '$root/stores/socket';
+
 	import BackSvg from '$root/components/shared/BackSvg.svelte';
 
 	import Settings from '$root/components/settings/Settings.svelte';
@@ -29,7 +31,11 @@
 
 <div class="section-container">
 	<div class="header">
-		<a href="/apps"><BackSvg /></a>
+		{#if $socketStatus === 'ok' || $socketStatus === 'init'}
+			<a href="/apps"><BackSvg /></a>
+		{:else}
+			<span />
+		{/if}
 		<span style={'font-size: 32px'}> 설정 </span>
 		<span>
 			{#if mobile === '비회원'}

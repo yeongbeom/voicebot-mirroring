@@ -6,7 +6,7 @@
 	export let mode: string;
 </script>
 
-<SocketManager condition="ok" />
+<SocketManager condition1="none" condition2="partial" condition3="init" />
 
 <SlidableSection pressUrl="/apps">
 	<video src="http://localhost:3080/{mode}" autoplay>

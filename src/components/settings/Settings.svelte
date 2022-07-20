@@ -29,7 +29,7 @@
 	};
 </script>
 
-<SocketManager bind:volume {power} condition="ok" addtionalCondition="partial" />
+<SocketManager bind:volume {power} />
 
 <div class="grid-container">
 	<span>캐릭터</span>
@@ -59,12 +59,16 @@
 		bind:userSelected={age}
 	/>
 
-	<span class:disabled={$socketStatus === 'none'}>볼륨</span>
-	<Slider disabled={$socketStatus === 'none'} on:change={handleVolumeChange} {volume} />
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>볼륨</span>
+	<Slider
+		disabled={$socketStatus === 'none' || $socketStatus === 'init'}
+		on:change={handleVolumeChange}
+		{volume}
+	/>
 
-	<span class:disabled={$socketStatus === 'none'}>스마트조명</span>
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>스마트조명</span>
 	<Radio
-		disabled={$socketStatus === 'none'}
+		disabled={$socketStatus === 'none' || $socketStatus === 'init'}
 		options={lightOptions}
 		fontSize={16}
 		flexDirection={'row'}
