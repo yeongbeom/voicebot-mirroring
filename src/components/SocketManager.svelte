@@ -23,7 +23,7 @@
 
 	setTimeout(() => {
 		if (!socket.connected) {
-			error = 'Edge server might be dead';
+			error = 'Edge server might be offline';
 			console.debug(error);
 		}
 	}, 1000);

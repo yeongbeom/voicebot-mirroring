@@ -79,10 +79,15 @@
 	<span>와이파이</span>
 	<span>정상 연결 상태</span>
 
-	<span>전원제어</span>
-	<span>
-		<button on:click={handleShutdown}>전원끄기</button>
-		<button on:click={handleReboot}>재시작</button>
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>전원제어</span>
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>
+		<button
+			disabled={$socketStatus === 'none' || $socketStatus === 'init'}
+			on:click={handleShutdown}>전원끄기</button
+		>
+		<button disabled={$socketStatus === 'none' || $socketStatus === 'init'} on:click={handleReboot}
+			>재시작</button
+		>
 	</span>
 
 	<span>버전</span>
@@ -116,5 +121,9 @@
 	button {
 		width: 120px;
 		margin: auto 24px;
+	}
+
+	button:disabled {
+		pointer-events: none;
 	}
 </style>
