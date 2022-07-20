@@ -29,7 +29,7 @@
 	};
 </script>
 
-<SocketManager bind:volume {power} condition="ok" addtionalCondition="partial" />
+<SocketManager bind:volume {power} />
 
 <div class="grid-container">
 	<span>캐릭터</span>
@@ -59,12 +59,16 @@
 		bind:userSelected={age}
 	/>
 
-	<span class:disabled={$socketStatus === 'none'}>볼륨</span>
-	<Slider disabled={$socketStatus === 'none'} on:change={handleVolumeChange} {volume} />
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>볼륨</span>
+	<Slider
+		disabled={$socketStatus === 'none' || $socketStatus === 'init'}
+		on:change={handleVolumeChange}
+		{volume}
+	/>
 
-	<span class:disabled={$socketStatus === 'none'}>스마트조명</span>
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>스마트조명</span>
 	<Radio
-		disabled={$socketStatus === 'none'}
+		disabled={$socketStatus === 'none' || $socketStatus === 'init'}
 		options={lightOptions}
 		fontSize={16}
 		flexDirection={'row'}
@@ -75,10 +79,15 @@
 	<span>와이파이</span>
 	<span>정상 연결 상태</span>
 
-	<span>전원제어</span>
-	<span>
-		<button on:click={handleShutdown}>전원끄기</button>
-		<button on:click={handleReboot}>재시작</button>
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>전원제어</span>
+	<span class:disabled={$socketStatus === 'none' || $socketStatus === 'init'}>
+		<button
+			disabled={$socketStatus === 'none' || $socketStatus === 'init'}
+			on:click={handleShutdown}>전원끄기</button
+		>
+		<button disabled={$socketStatus === 'none' || $socketStatus === 'init'} on:click={handleReboot}
+			>재시작</button
+		>
 	</span>
 
 	<span>버전</span>
@@ -112,5 +121,9 @@
 	button {
 		width: 120px;
 		margin: auto 24px;
+	}
+
+	button:disabled {
+		pointer-events: none;
 	}
 </style>
