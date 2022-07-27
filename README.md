@@ -1,38 +1,52 @@
-# create-svelte
+<h1 align='center'>
+  <img src='/diagram.png' alt='system diagram' width='700'>
+</h1>
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+# Install
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+### Database (docker)
 
 ```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+docker pull postgres
+docker run --name postgres -p 5432:5432 -e POSTGRES_PASSWORD=mysecretpassword -d postgres
 ```
 
-## Building
+### `dotenv` file
 
-To create a production version of your app:
+Create `.env` file in the project's root directory. Open the file and add the following line of code:
 
 ```bash
-npm run build
+DATABASE_URL='postgres://postgres:mysecretpassword@localhost:5432/database'
+VITE_TTS_API_KEY_0={api-key}
+VITE_TTS_API_KEY_1={api-key}
+VITE_TTS_API_KEY_2={api-key}
+VITE_TTS_API_KEY_3={api-key}
+VITE_TTS_API_KEY_4={api-key}
+VITE_TTS_API_KEY_5={api-key}
+VITE_WEATHER_API_KEY={api-key}
 ```
 
-You can preview the production build with `npm run preview`.
+### npm
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+```bash
+npm i
+npm run dev -- --host --https
+```
+
+# GitPod
+
+1. Install GitPod chrome extension
+
+   https://chrome.google.com/webstore/detail/gitpod-always-ready-to-co/dodmmooeoklaejobgleioelladacbeki
+
+2. Run
+
+# Mis.
+
+### Weather API (Current Weather Data)
+
+https://openweathermap.org/api
+
+### TTS API
+
+https://speech-api.kakao.com/
