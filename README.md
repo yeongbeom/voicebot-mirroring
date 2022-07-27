@@ -1,5 +1,5 @@
 <h1 align='center'>
-  <img src='/diagram.png' alt='system diagram' width='700'>
+  <img src='static/diagram.png' alt='system diagram' width='700'>
 </h1>
 
 # Install
