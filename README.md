@@ -2,7 +2,16 @@
   <img src='static/diagram.png' alt='system diagram' width='700'>
 </h1>
 
-# Install
+# Prerequisite
+
+- Docker
+- Node v16
+
+For edge device, see edge-server/README.md
+
+# Getting started
+
+## Method 1: local build
 
 ### Database (docker)
 
@@ -26,20 +35,24 @@ VITE_TTS_API_KEY_5={api-key}
 VITE_WEATHER_API_KEY={api-key}
 ```
 
-### npm
+### Run
 
 ```bash
 npm i
 npm run dev -- --host --https
 ```
 
-# GitPod
+## Method 2: web IDE using Gitpod
 
-1. Install GitPod chrome extension
+1. Join Gitpod and install Gitpod chrome extension
 
    https://chrome.google.com/webstore/detail/gitpod-always-ready-to-co/dodmmooeoklaejobgleioelladacbeki
 
-2. Run
+2. Go to https://gitpod.io/account, allow permissions for Github integration and add env info (e.g. API keys)
+
+3. Navigate to your project’s GitHub and click green Gitpod button that the Gitpod Chrome extension created
+
+4. It runs automatically
 
 # Mis.
 
@@ -47,6 +60,6 @@ npm run dev -- --host --https
 
 https://openweathermap.org/api
 
-### TTS API
+### TTS API (Kakao)
 
 https://speech-api.kakao.com/
