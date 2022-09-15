@@ -15,7 +15,7 @@ tasks:
   - command: npx prisma studio
     env:
       DATABASE_URL: postgres://gitpod@localhost/database
-      VITE_TTS_API_KEY_0: ${{ secrets.TISTORY_APP_ID.VITE_TTS_API_KEY_0 }}
+      VITE_TTS_API_KEY_0: ${{ secrets.VITE_TTS_API_KEY_0 }}
       VITE_TTS_API_KEY_1: ${{ secrets.TISTORY_APP_ID.VITE_TTS_API_KEY_1 }}
       VITE_TTS_API_KEY_2: ${{ secrets.TISTORY_APP_ID.VITE_TTS_API_KEY_2 }}
 ports:
