@@ -52,7 +52,7 @@ npm run dev -- --host --https
 
 3. Navigate to your project’s GitHub and click green Gitpod button that the Gitpod Chrome extension created
 
-4. It runs automatically
+4. It runs automatically.
 
 # Mis.
 
