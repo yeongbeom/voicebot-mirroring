@@ -45,7 +45,7 @@
 
 		window.addEventListener('contextmenu', disableContextmenu);
 
-		const idleInterval = setInterval(timerIncrement, 60 * 1000);
+		const idleInterval = setInterval(timerIncrement, 2 * 1000);
 	});
 </script>
 

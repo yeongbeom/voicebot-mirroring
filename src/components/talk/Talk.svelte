@@ -19,7 +19,8 @@
 	import SpeechRecog from '$root/components/talk/SpeechRecog.svelte';
 	import MediaRec from '$root/components/talk/MediaRec.svelte';
 	import { reloadApp } from '$root/utils/reloadApp';
-
+	// import { ttsApiKey } from '$root/api/keys';
+	import mp3file from '$root/components/talk/mp3/announce.mp3';
 	let error = false;
 	let message: string;
 
@@ -34,9 +35,12 @@
 	let cmdResEmotion: string;
 	let continued = false;
 
-	const DELAY_RELOAD = 1000 * 3;
-	const WATCHDOG_LIMIT = 20;
+	const DELAY_RELOAD = 1; // 1000 * 3;
+	const WATCHDOG_LIMIT = 50; // 20;
 	let watchdogTimer = 0;
+
+	let exceeded_date = null;
+	let key_number = 0;
 
 	const setIdle = () => {
 		$currentStatus = $status.idle;
@@ -46,6 +50,9 @@
 		if (mediaRecorder !== null) {
 			console.debug(`${mediaRecorder} is being stopped`);
 			mediaRecorder.stop();
+			console.error('----- in stopRunningApps -----');
+			console.error(mediaRecorder.state);
+			console.error('----- ------------------ -----');
 		}
 		if (stream !== null) {
 			stream
@@ -151,21 +158,59 @@
 			text: $heard,
 			uid: 'temp-uid'
 		};
+		let audioData: ArrayBuffer;
 		try {
 			let empathyRes; // [TODO] connect to db
 
 			if (!command) empathyRes = await fetchEmpathyData(empathyReq);
-			const audioData: ArrayBuffer = await fetchTtsData(command ? cmdResText : empathyRes.text);
+			if (
+				exceeded_date !== new Date().toLocaleDateString() &&
+				exceeded_date !== null &&
+				new Date().getHours() > 10
+			) {
+				key_number = 0;
+				exceeded_date = null;
+			}
 
-			const audioCtx = new AudioContext();
+			while (exceeded_date === null) {
+				console.error('exceeded_date is null!!!');
+				try {
+					do {
+						// console.error(empathyRes.text);
+						// const audioData: ArrayBuffer = await fetchTtsData(
+						audioData = await fetchTtsData(command ? cmdResText : empathyRes.text, key_number);
+					} while (audioData.byteLength > 0 != true);
+					const audioCtx = new AudioContext();
 
-			audioCtx.decodeAudioData(audioData, (buffer) => {
-				audioSource = audioCtx.createBufferSource();
-				audioSource.addEventListener('ended', setIdle);
-				audioSource.buffer = buffer;
-				audioSource.connect(audioCtx.destination);
-				audioSource.start(0);
-			});
+					audioCtx.decodeAudioData(audioData, (buffer) => {
+						audioSource = audioCtx.createBufferSource();
+						audioSource.addEventListener('ended', setIdle);
+						audioSource.buffer = buffer;
+						audioSource.connect(audioCtx.destination);
+						audioSource.start(0);
+					});
+					break;
+				} catch (error) {
+					console.error('fetchTtsData error: ' + error);
+					key_number++;
+					// console.error(key_number, ' / 3');
+					if (key_number === 1) {
+						exceeded_date = new Date().toLocaleDateString();
+					}
+				}
+			}
+			if (exceeded_date !== null) {
+				console.error(exceeded_date);
+				const myAudio = new Audio();
+				myAudio.src = mp3file;
+				myAudio.play();
+			}
+
+			console.error('key number is ', key_number);
+
+			/* do {
+				audioData = await fetchTtsData(command ? cmdResText : empathyRes.text);
+			} while (audioData.byteLength > 0 != true); */
 
 			//@ts-ignore
 			$currentExpression = $expression[command ? cmdResEmotion : empathyRes.emotion];

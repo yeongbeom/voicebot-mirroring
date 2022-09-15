@@ -9,8 +9,8 @@ type EmpathyReq = {
 	uid: string;
 };
 
-export const fetchTtsData = async (speechText: string): Promise<ArrayBuffer> => {
-	const keyNo: number = getRandomIntInclusive(0, 5);
+export const fetchTtsData = async (speechText: string, keyNo: number): Promise<ArrayBuffer> => {
+	// const keyNo: number = getRandomIntInclusive(0, 2);
 	const headers_synth = {
 		'Content-Type': 'application/xml',
 		Authorization: `KakaoAK ${ttsApiKey[keyNo]}`

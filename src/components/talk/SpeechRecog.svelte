@@ -48,8 +48,19 @@
 			}
 		};
 
-		recognition.onerror = () => {
-			console.error('Speech Recognition Error');
+		recognition.onerror = (event) => {
+			if (event.error !== 'no-speech') {
+				let today = new Date();
+				console.error(today.toLocaleDateString(), today.toLocaleTimeString());
+				console.error('Speech Recognition Error');
+				console.error(event.error);
+				/*
+				if (event.error === 'audio-capture') {
+					reloadApp(window, 1);
+					console.error(event.error);
+				}
+				*/
+			}
 		};
 
 		recognition.onend = () => {
